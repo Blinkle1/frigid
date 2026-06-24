@@ -1285,6 +1285,7 @@ transform = Transform3D(-0.751172, -0.12137076, -0.6488527, -0.2808957, 0.948287
 [node name="Label3D2" type="Label3D" parent="axe" unique_id=1034117398]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96871054, 0)
 visible = false
+layers = 3
 offset = Vector2(0, 15)
 billboard = 1
 text = "Axe [G]"

@@ -36,6 +36,7 @@ func PickupNearestItem():
 			printerr("Bro, you forgot to drag Axe_Data.tres into the floor item!")
 
 func OnObjectEnteredArea(body: Node3D):
+	print("Something entered: ", body.name)
 	if (body is InteractableItem):
 		body.GainFocus()
 		NearbyBodies.append(body)

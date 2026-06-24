@@ -26,6 +26,8 @@ func _on_interaction_area_body_exited(body):
 
 func GainFocus():
 	ItemHighlightMesh.visible = true
+	tooltip.visible = true
 
 func LoseFocus():
 	ItemHighlightMesh.visible = false
+	tooltip.visible = false
