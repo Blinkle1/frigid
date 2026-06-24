@@ -1288,7 +1288,7 @@ visible = false
 layers = 3
 offset = Vector2(0, 15)
 billboard = 1
-text = "Axe [G]"
+text = "Axe [E]"
 
 [connection signal="OnItemPickedUp" from="CharacterBody3D/InteractionArea" to="CharacterBody3D/ImportantStuff/InventoryHandler" method="_on_interaction_area_on_item_picked_up"]
 [connection signal="body_entered" from="CharacterBody3D/InteractionArea" to="CharacterBody3D/InteractionArea" method="OnObjectEnteredArea"]
