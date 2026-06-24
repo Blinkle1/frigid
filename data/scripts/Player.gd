@@ -20,7 +20,14 @@ var gravity = 9.8
 
 @onready var head = $Head
 @onready var camera = $Head/Camera
+@onready var foot_cast = $FootCast
+@onready var foostep = $AudioStreamPlayer3D
 
+var footstep_sounds = [
+	preload("res://data/sfx/footstep1.wav"),
+	preload("res://data/sfx/footstep2.wav"),
+	preload("res://data/sfx/footstep3.wav")
+]
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -71,8 +78,25 @@ func _physics_process(delta):
 	camera.fov = lerp(camera.fov, target_fov, delta * 8.0)
 	
 	move_and_slide()
+	
+	# Detect surface and play sound
+	if is_on_floor() and direction.length() > 0:
+		# Check if we are at the right point in the bob cycle (approx top/bottom)
+		# Using a simple check to trigger only when the bob hits the peak
+		if sin(t_bob * BOB_FREQ) > 0.95 and $AudioStreamPlayer3D.playing == false:
+			play_footstep()
 
-
+func play_footstep():
+	var surface = foot_cast.get_collider()
+	# Grab a random sound from the array
+	$AudioStreamPlayer3D.volume_db = -20.0
+	$AudioStreamPlayer3D.stream = footstep_sounds.pick_random()
+	
+	# Optional: randomize pitch slightly for variety
+	$AudioStreamPlayer3D.pitch_scale = randf_range(0.9, 1.1)
+	
+	$AudioStreamPlayer3D.play()
+	
 func _headbob(time) -> Vector3:
 	var pos = Vector3.ZERO
 	pos.y = sin(time * BOB_FREQ) * BOB_AMP
