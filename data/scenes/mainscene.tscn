@@ -173,8 +173,6 @@ emission_energy_multiplier = 11.0
 material = SubResource("StandardMaterial3D_5fi5y")
 size = Vector3(0.5, 0.3, 0.7)
 
-[sub_resource type="BoxMesh" id="BoxMesh_kuq7h"]
-
 [node name="Main" type="Node3D" unique_id=1733271312]
 
 [node name="UIManager" type="CanvasLayer" parent="." unique_id=921903538]
@@ -1290,12 +1288,6 @@ visible = false
 offset = Vector2(0, 15)
 billboard = 1
 text = "Axe [G]"
-
-[node name="testcube" type="Node3D" parent="." unique_id=1631216211]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="testcube" unique_id=1674763298]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0380404, 2.6863253, 3.2019567)
-mesh = SubResource("BoxMesh_kuq7h")
 
 [connection signal="OnItemPickedUp" from="CharacterBody3D/InteractionArea" to="CharacterBody3D/ImportantStuff/InventoryHandler" method="_on_interaction_area_on_item_picked_up"]
 [connection signal="body_entered" from="CharacterBody3D/InteractionArea" to="CharacterBody3D/InteractionArea" method="OnObjectEnteredArea"]
