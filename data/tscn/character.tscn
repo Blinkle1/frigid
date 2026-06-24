@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bseq44d8ytx8b"]
+
+[ext_resource type="PackedScene" uid="uid://dmesno7mh3j0r" path="res://data/models/glbs/main_character.glb" id="1_uubbi"]
+
+[node name="Node3D" type="Node3D" unique_id=1514708313]
+
+[node name="Sketchfab_Scene" parent="." unique_id=1989748252 instance=ExtResource("1_uubbi")]

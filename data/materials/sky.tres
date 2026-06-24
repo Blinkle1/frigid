@@ -1,0 +1,6 @@
+[gd_resource type="PhysicalSkyMaterial" load_steps=2 format=3 uid="uid://c0dcy4u7k7gw8"]
+
+[ext_resource type="Texture2D" uid="uid://bqfjn4u8f3385" path="res://data/textures/nightsky.png" id="1_3m7s0"]
+
+[resource]
+night_sky = ExtResource("1_3m7s0")

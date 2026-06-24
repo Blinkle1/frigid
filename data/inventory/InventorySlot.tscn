@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://cch3umx7ltlwr"]
+
+[ext_resource type="Script" uid="uid://dslupny4kbdla" path="res://data/scripts/InventorySlot.gd" id="1_dpw4p"]
+
+[node name="InventorySlot_tscn" type="Control" unique_id=1166513560 node_paths=PackedStringArray("IconSlot")]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dpw4p")
+IconSlot = NodePath("TextureRect")
+
+[node name="Panel" type="Panel" parent="." unique_id=390306709]
+visible = false
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 0
+offset_right = 70.0
+offset_bottom = 70.0
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1149516974]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5

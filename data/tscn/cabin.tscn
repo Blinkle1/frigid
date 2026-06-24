@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://dbdo5o720g37r"]
+
+[ext_resource type="PackedScene" uid="uid://b7d2pfl53bchu" path="res://data/models/glbs/the_blacksmiths.glb" id="1_mud6j"]
+
+[node name="Sketchfab_Scene" unique_id=877943834 instance=ExtResource("1_mud6j")]
+
+[node name="Sketchfab_model" parent="." index="0" unique_id=1484974493]
+transform = Transform3D(0.02, 0, 0, 0, -8.7422775e-10, 0.02, 0, -0.02, -8.7422775e-10, 0, 0, 0)

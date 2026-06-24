@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://gmf73rki8dm1"
+path="res://.godot/imported/cold wind.ogg-2877810549fe7ed6d6291fdcc391a1ed.oggvorbisstr"
+
+[deps]
+
+source_file="res://data/music/cold wind.ogg"
+dest_files=["res://.godot/imported/cold wind.ogg-2877810549fe7ed6d6291fdcc391a1ed.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

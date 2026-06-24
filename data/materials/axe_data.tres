@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://d17p3ul73x1pr"]
+
+[ext_resource type="Script" uid="uid://cg7ohjuhim53o" path="res://data/scripts/ItemData.gd" id="1_57uqo"]
+[ext_resource type="Texture2D" uid="uid://cc1jfgkqdceqr" path="res://data/textures/axe_icon.png" id="1_x453u"]
+
+[resource]
+script = ExtResource("1_57uqo")
+ItemName = "axe"
+Icon = ExtResource("1_x453u")
+ItemModelPrefab = "uid://0tctbehc1p8n"
+metadata/_custom_type_script = "uid://cg7ohjuhim53o"
