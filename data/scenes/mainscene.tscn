@@ -180,6 +180,48 @@ size = Vector3(0.5, 0.3, 0.7)
 process_mode = 3
 script = ExtResource("1_ywt6w")
 
+[node name="SettingsMenu" type="Control" parent="UIManager" unique_id=380436463]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UIManager/SettingsMenu" unique_id=196546687]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -101.0
+offset_top = -33.0
+offset_right = 106.54004
+offset_bottom = 136.91003
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MasterAudioSlider" type="HSlider" parent="UIManager/SettingsMenu/VBoxContainer" unique_id=1307615667]
+layout_mode = 2
+tooltip_text = "Master Audio"
+
+[node name="ResolutionButton" type="OptionButton" parent="UIManager/SettingsMenu/VBoxContainer" unique_id=51374095]
+layout_mode = 2
+
+[node name="FullscreenButton" type="OptionButton" parent="UIManager/SettingsMenu/VBoxContainer" unique_id=1115221348]
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="UIManager/SettingsMenu" unique_id=751698507]
+layout_mode = 0
+offset_left = 1690.0
+offset_top = 975.0
+offset_right = 1891.0
+offset_bottom = 1052.0
+theme_override_font_sizes/font_size = 50
+text = "Back"
+
 [node name="PauseMenu" type="Control" parent="UIManager" unique_id=1397500617]
 process_mode = 3
 visible = false
@@ -243,6 +285,7 @@ skeleton = NodePath("")
 shape = SubResource("CapsuleShape3D_5lfti")
 
 [node name="HUD" type="CanvasLayer" parent="CharacterBody3D" unique_id=1351992665]
+visible = false
 
 [node name="TextureRect" type="TextureRect" parent="CharacterBody3D/HUD" unique_id=1178460464]
 offset_left = 809.0
@@ -275,6 +318,7 @@ transform = Transform3D(1, 0, 0, 3.72529e-09, 1, 0, 0, 0, 1, 0, 0, 0)
 fov = 90.0
 
 [node name="filter" type="ColorRect" parent="CharacterBody3D/Head/Camera" unique_id=542315878]
+visible = false
 material = SubResource("ShaderMaterial_r11fm")
 use_parent_material = true
 offset_left = -6273.0
@@ -1199,6 +1243,12 @@ transform = Transform3D(7.5, 0, 0, 0, 7.5, 0, 0, 0, 7.5, 20.7814, 0.821176, 20.4
 [node name="Tree290" parent="world/trees" unique_id=1310311668 instance=ExtResource("10_yyfk4")]
 transform = Transform3D(7.5, 0, 0, 0, 7.5, 0, 0, 0, 7.5, 22.2807, 0.821176, 21.562)
 
+[node name="Tree67" parent="world/trees" unique_id=1947554649 instance=ExtResource("10_yyfk4")]
+transform = Transform3D(7.5, 0, 0, 0, 7.5, 0, 0, 0, 7.5, 51.14393, 0, 24.16681)
+
+[node name="Tree68" parent="world/trees" unique_id=2118051119 instance=ExtResource("10_yyfk4")]
+transform = Transform3D(7.5, 0, 0, 0, 7.5, 0, 0, 0, 7.5, 47.44131, 0, 20.738232)
+
 [node name="blacksmith" type="Node3D" parent="world" unique_id=644265809]
 
 [node name="Lights" type="Node3D" parent="world/blacksmith" unique_id=340913119]
@@ -1243,7 +1293,7 @@ transform = Transform3D(-1.5167857, 0, -1.5940119, 0, 8.492735, 0, 1.4938239, 0,
 transform = Transform3D(-1.148477, 0, -2.6324885, 0, 17.327263, 0, 2.4703403, 0, -1.2606807, -87.31563, -43.75556, 43.700012)
 
 [node name="cliff6" parent="world/cliffs" unique_id=1001556441 instance=ExtResource("18_vqjgk")]
-transform = Transform3D(0.04539287, 0, -2.8818338, 0, 17.327263, 0, 2.7602427, 0, -0.07833946, 50.607952, -75.93363, 48.698044)
+transform = Transform3D(0.041397236, -7.1083736, -2.628165, 0.018622065, 15.802058, -1.1822495, 2.7602427, 0, -0.078339465, 80.11563, -55.741604, 48.698044)
 
 [node name="lampposts" type="Node3D" parent="world" unique_id=1425540199]
 
