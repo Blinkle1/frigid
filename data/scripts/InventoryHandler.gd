@@ -9,6 +9,11 @@ class_name InventoryHandler
 @export var axe_in_hand : Node3D
 @export var AxeAnimator : AnimationPlayer
 
+# TODO: finish the rest of the inventory later, tired rn.
+
+## represents the resident evil-esque inventory (WIP)
+@export var ItemBoard : Array[int] = [];
+
 var InventorySlots : Array[InventorySlot] = []
 var EquippedSlot : int = -1
 
