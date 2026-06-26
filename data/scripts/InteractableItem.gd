@@ -1,6 +1,6 @@
 extends RigidBody3D
 class_name InteractableItem
-
+# todo: remove this todo
 @export var ItemHighlightMesh : MeshInstance3D
 @export var ItemHighlightMesh2 : MeshInstance3D
 @export var item_data : ItemData
