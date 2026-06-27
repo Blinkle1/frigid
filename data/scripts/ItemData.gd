@@ -32,14 +32,19 @@ class_name ItemData
 ## Maximum items per stack. This is usally only 1 for things like weapons, and
 ## higher for things like ammo.
 @export var MaxStack : int;
+## Can this item be put in the pocket slots, is shown in the tooltip.
+## Typically this would be true for small items.
+@export var canBePocket : bool;
 
+# TODO: This function is not done yet, as it does not adjust the underlying
+# shape properly, all it does is change the Width and Height variables.
 ## Function to be called when changing the size of an item in the properties
 ## menu. Any new cells/indexes created should be set to 0. Width and Height
 ## should never go below 1.                 [br]
 ## Returns 0, -1, -2, or -3 depending on if any size changes went out of bounds:
 ## 0 for none, -1 for Width, -2 for Height, -3 for both.
-func adjust_size(widthChange : int = 0, heightChange : int = 0):
-	var rVal : int = 0;
+func adjustSize(widthChange : int = 0, heightChange : int = 0):
+	var rVal = 0;
 	
 	if (self.Width + widthChange < 1):
 		self.Width = 1;
@@ -54,3 +59,18 @@ func adjust_size(widthChange : int = 0, heightChange : int = 0):
 		self.Height += heightChange;
 	
 	return rVal;
+
+## See if the item exists at the given set of coordinates. Set check
+## to false to skip all boundary checks. Returns -1 if x is out of bounds,
+## -2 if y is out of bounds, and -3 if both.
+func indexShape(x : int, y : int, check : bool = true):
+	if check:
+		var c = 0;
+		if (x >= self.Width or x < 0):
+			c -= 1;
+		if (y >= self.Height or y < 0):
+			c -= 2;
+		if c < 0:
+			return c;
+	
+	return Shape[(y * self.Height) + self.Width];
