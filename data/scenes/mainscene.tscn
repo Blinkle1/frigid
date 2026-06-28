@@ -212,9 +212,8 @@ layout_mode = 2
 [node name="Label" type="Label" parent="UIManager/SettingsMenu/VBoxContainer/ResolutionButton" unique_id=668252886]
 layout_mode = 0
 offset_left = -111.0
-offset_top = -2.0
 offset_right = -7.0
-offset_bottom = 21.0
+offset_bottom = 23.0
 text = "Resolution"
 
 [node name="FullscreenButton" type="OptionButton" parent="UIManager/SettingsMenu/VBoxContainer" unique_id=1115221348]
