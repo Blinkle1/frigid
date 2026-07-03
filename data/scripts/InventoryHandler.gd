@@ -12,6 +12,9 @@ class_name InventoryHandler
 var InventorySlots : Array[InventorySlot] = []
 var EquippedSlot : int = -1
 
+## All the Spacial Inventories the player has.
+var Inventories : Array[SpacialInventory] = [];
+
 func _ready():
 	for i in ItemSlotsCount:
 		var slot = InventorySlotPrefab.instantiate() as InventorySlot
@@ -104,3 +107,17 @@ func GetDropPosition() -> Vector3:
 
 func _on_interaction_area_on_item_picked_up(item: Variant) -> void:
 	PickupItem(item)
+
+func addInventory(width : int, height : int):
+	Inventories.append(SpacialInventory.new(width, height));
+
+
+
+
+
+
+
+
+
+
+#

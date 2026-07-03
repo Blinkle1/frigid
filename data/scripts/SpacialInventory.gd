@@ -1,3 +1,4 @@
+extends Node
 ## Represents a spacial inventory.
 ##
 ## Has Board which contains the shapes of items (the dimensions of which are
@@ -17,11 +18,7 @@ class_name SpacialInventory
 ##       0 0 4 0                      [br]
 ## 0 is empty space, 1 points to the first element (index 0) of ItemsList,
 ## 2 the second element (index 1), etc.
-@export var Board : Array[int] = [];
-## Width of Board (x).
-@export var Width : int;
-## Height of Board (y).
-@export var Height : int;
+var Board : gridShape;
 ## List of the actual items in the inventory. This is an internal variable, and
 ## should not be shown via UI. Items are added to the lowest empty (null) slot.
 ## Is the same length as Board.
@@ -37,44 +34,53 @@ func _init(Width : int, Height : int):
 	self.List.resize(self.Width*self.Height);
 	self.List.fill(null);
 
-## See what item exists, if any, at a certain set of coordinates. Set check to
-## false to skip all boundary checks. Returns -11 if x is out of bounds,
-## -12 if y is out of bounds, and -13 if both are out of bounds.
-func indexBoard(x : int, y : int, check : bool = true):
-	if check:
-		var c = 0;
-		if (x >= self.Width or x < 0):
-			c -= 1;
-		if (y >= self.Height or y < 0):
-			c -= 2;
-		if c < 0:
-			return c - 10;
-	
-	return Board[(y * self.Height) + self.Width];
+# TODO: This should have multiple return values:
+# if the item can't fit, return a shape that shows where
+# there are collisions. Example:
+# 
+#   item            inv                  
+#  . . 1 0        0 0 1 1   (cant fit)   . . 1
+#  . . 1 1   ->   0 0 0 0        =       . . 
+#  . . . .        0 0 0 0                
 
-## Actually see if an item can fit in the space provided.
-func compareSpace(x : int, y : int, new:ItemData):
+## @experimental
+## Actually see if an shape can fit in the space provided. [br]
+## Returns -1 if out of bounds, 0 if there's overlap, 1 if there is no overlap. 
+func spaceCheck(x : int, y : int, shape : gridShape):
 	# Bounds check.
-	if (x + new.Width) > Width:
+	if ( ((x + shape.Width) > self.Board.Width)
+	or ((y + shape.Height) > self.Board.Height) ):
 		return -1;
-	if (y + new.Height) > Height:
-		return -2;
 		
 	# Overlap check.
-	for xindex in range(0, new.Width):
-		for yindex in range(0, new.Height):
+	for xindex in range(0, shape.Width):
+		for yindex in range(0, shape.Height):
 			# If at least one returns 0, there is no overlap.
-			if (indexBoard(xindex + x, yindex + y, false) and
-					new.indexShape(xindex, yindex, false)):
-				return -3;
+			if (self.Board.indexGrid(xindex + x, yindex + y, false) and
+					shape.indexGrid(xindex, yindex, false)):
+				return 0;
 	
-	return 0;
+	return 1;
 
 # TODO: Complete function. This mirrors the adjustShape function
-# in ItemData. We could also totally disregard this function if it's
-# functionality is not needed.
+# in ItemData. Could be used for inventory space upgrades. Should be used
+# for things like Holsters, as those are entirely separate spacial inventories.
 
 ## @experimental
 ## Adjusts Width, Height, and consequentially Board.
 func adjustBoard():
 	pass;
+
+## Add an item to inventory by checking if it fits in the spacial inventory.
+##
+func addItemBySpace(item : ItemData) -> bool:
+	return 0;
+	
+
+
+
+
+
+
+
+#

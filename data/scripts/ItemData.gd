@@ -1,30 +1,54 @@
 extends Resource
+## A class for containing the raw data for items.
+##
+## Container for all the data needed to represent an item, such as it's Name,
+## ID, Model.
 class_name ItemData
+
+## @experimental
+## Don't know what this exactly does yet, but I'm thinking
+## that some type of glossary, internal or external, could use this.
+## Could also be used to quickly set up items, something like a prefab. [br]
+## Feel free to remove this if this proves to be useless.
+enum ITEMTYPE {
+	SYRINGE,		## Syringe, potion-esque items.
+	GUN,			## Gun type weapon.
+	MELEE,			## Melee type weapon.
+	KEY_LITERALLY,	## Keys for opening doors and locks.
+	AMMO,			## Ammo for guns and stuff.
+	
+	OTHER,			## Miscellaneous items.
+}
 
 ## Name of item.
 @export var ItemName : String
+## Texture of item for inventory, might not be needed if we just use
+## a 3D model for inventory.
 @export var Icon : Texture2D
+## The model I presume.
 @export_file("*.tscn") var ItemModelPrefab : String
 
 # TODO: Make these variables changeable from the property editor.
+# Do this via @tool and this link:
+# (https://docs.godotengine.org/en/stable/tutorials/plugins/editor/inspector_plugins.html)
 
+## ID of the item.
+var ID : int;
+
+## Type of item. (Ex: Syringe, Gun, Melee)
+@export var Type : ITEMTYPE;
 ## Determines if an Item takes up space in inventory and can be dropped;
 ## essentially makes all inventory related variables moot. Feel free to remove
 ## this.
 @export var IsKeyItem : bool;
-## Item width. Used in inventory.
-@export var Width : int;
-## Item height. Used in inventory.
-@export var Height : int;
-## 2d array representing the "shape" of the item in the inventory, size is
-## determined by the Width and Height variables. The 1s represent the actual
-## shape, the 0s represent empty space.                      [br]
-## 4x4 example:                      [br]
-##       1 1 1 1                      [br]
-##       0 1 0 0                      [br]
-##       0 1 0 0                      [br]
-##       0 1 0 0
-@export var Shape : Array[int];
+## Grid representing the "shape" of the item in the inventory. The 1s create
+## the actual shape of the item, and 0s are the empty space.	[br]
+## 5x4 example (pickaxe):                      [br]
+##       1 1 1 1 1                      [br]
+##       0 0 1 0 0                      [br]
+##       0 0 1 0 0                      [br]
+##       0 0 1 0 0
+var Shape : gridShape = null;
 ## The weight of an Item, currently only to be used in inventory. We can drop
 ## this if we decide to not go through with weight. We can also change the type
 ## to INT if that would make calculations easier.
@@ -38,6 +62,7 @@ class_name ItemData
 
 # TODO: This function is not done yet, as it does not adjust the underlying
 # shape properly, all it does is change the Width and Height variables.
+# TODO: Move this to gridShape.gd
 ## Function to be called when changing the size of an item in the properties
 ## menu. Any new cells/indexes created should be set to 0. Width and Height
 ## should never go below 1.                 [br]
@@ -60,17 +85,26 @@ func adjustSize(widthChange : int = 0, heightChange : int = 0):
 	
 	return rVal;
 
-## See if the item exists at the given set of coordinates. Set check
-## to false to skip all boundary checks. Returns -1 if x is out of bounds,
-## -2 if y is out of bounds, and -3 if both.
-func indexShape(x : int, y : int, check : bool = true):
-	if check:
-		var c = 0;
-		if (x >= self.Width or x < 0):
-			c -= 1;
-		if (y >= self.Height or y < 0):
-			c -= 2;
-		if c < 0:
-			return c;
-	
-	return Shape[(y * self.Height) + self.Width];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# just some blank space so i can scroll down in the editor, please dont remove #
