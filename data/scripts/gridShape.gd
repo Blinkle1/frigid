@@ -14,7 +14,7 @@ class_name gridShape
 
 ## The grid. Numbers within it represent different things depending on what
 ## class is using it.
-var Grid : Array[int];
+@export var Grid : Array[int];
 
 ## Create grid given Width and Height, fill with 0s.
 func _init(Width : int, Height : int):

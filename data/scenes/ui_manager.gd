@@ -1,5 +1,7 @@
+
 extends CanvasLayer
 
+@onready var inventory_menu = $InventoryUI
 @onready var pause_menu = $PauseMenu
 @onready var settings_menu = $SettingsMenu
 @onready var map_ui = $MapUI
@@ -11,8 +13,15 @@ extends CanvasLayer
 @onready var fullscreen_btn = $SettingsMenu/VBoxContainer/FullscreenButton
 @onready var back_btn = $SettingsMenu/BackButton
 
-enum MenuState { NONE, PAUSE, SETTINGS, MAP }
-var current_menu_state = MenuState.NONE
+enum MenuState { 
+	NONE, 				
+	PAUSE, 				
+	SETTINGS, 			
+	MAP, 				
+	INVENTORY,
+
+}			
+@export var current_menu_state = MenuState.NONE
 var previous_state = MenuState.NONE
 
 func _ready():
@@ -32,6 +41,11 @@ func _ready():
 	fullscreen_btn.add_item("Windowed")
 	fullscreen_btn.add_item("Fullscreen")
 	fullscreen_btn.add_item("Borderless")
+	
+	
+	
+	#change_menu(MenuState.INVENTORY)
+	change_menu(MenuState.NONE)
 
 func change_menu(new_state):
 	# 1. Update the tracking variable
@@ -42,14 +56,21 @@ func change_menu(new_state):
 	pause_menu.visible = (current_menu_state == MenuState.PAUSE)
 	settings_menu.visible = (current_menu_state == MenuState.SETTINGS)
 	map_ui.visible = (current_menu_state == MenuState.MAP)
+	inventory_menu.visible = (current_menu_state == MenuState.INVENTORY);
 	
 	# 3. Handle Game/Mouse state
-	if current_menu_state == MenuState.NONE:
-		get_tree().paused = false
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	else:
-		get_tree().paused = true
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	match current_menu_state:
+		MenuState.NONE:
+			get_tree().paused = false
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		
+		MenuState.MAP, MenuState.INVENTORY:
+			get_tree().paused = false
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+			
+		_:		# triggers on everything else (wildcard)
+			get_tree().paused = true
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		
 func go_back():
 	change_menu(previous_state)
@@ -64,13 +85,27 @@ func _input(event):
 	# Handle Pause
 	if event.is_action_pressed("pause"):
 		toggle_pause()
+		#quit_game()
 		
 	# Handle Map 
 	elif event.is_action_pressed("map"):
-		if current_menu_state == MenuState.NONE:
-			change_menu(MenuState.MAP)
-		elif current_menu_state == MenuState.MAP:
-			change_menu(MenuState.NONE)
+		match current_menu_state:
+			MenuState.NONE:
+				change_menu(MenuState.MAP);
+			MenuState.MAP:
+				change_menu(MenuState.NONE);
+		print(inventory_menu.position)
+	
+	# Handle Inventory
+	elif event.is_action_pressed("inventory"):
+		match current_menu_state:
+			MenuState.NONE:
+				change_menu(MenuState.INVENTORY);
+			MenuState.MAP:
+				change_menu(MenuState.INVENTORY);
+			MenuState.INVENTORY:
+				change_menu(MenuState.NONE);
+
 
 func _on_master_volume_changed(value):
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), linear_to_db(value / 100))

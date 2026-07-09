@@ -4,13 +4,13 @@
 [ext_resource type="Script" uid="uid://dtxh736jfsy08" path="res://data/scenes/ui_manager.gd" id="1_ywt6w"]
 [ext_resource type="Script" uid="uid://byfog4upapbqi" path="res://data/scripts/Player.gd" id="2_5fi5y"]
 [ext_resource type="Texture2D" uid="uid://cunjeg0whbvwk" path="res://data/textures/inventory.png" id="2_6sb1n"]
+[ext_resource type="Script" uid="uid://cxmobujj1xnn7" path="res://data/scenes/inventory_ui.gd" id="2_ek5i0"]
 [ext_resource type="Shader" uid="uid://d0sp3vkcq15u0" path="res://data/shaders/pixelshader.gdshader" id="3_r11fm"]
 [ext_resource type="PackedScene" uid="uid://dmesno7mh3j0r" path="res://data/models/glbs/main_character.glb" id="3_txlyk"]
 [ext_resource type="Script" uid="uid://dk1wd8e5e7deh" path="res://data/scripts/PlayerInteractionHandler.gd" id="4_5fi5y"]
 [ext_resource type="AudioStream" uid="uid://b46dwx8gv3vyx" path="res://data/music/safe_house_updated.ogg" id="4_vs84l"]
 [ext_resource type="Script" uid="uid://cg7ohjuhim53o" path="res://data/scripts/ItemData.gd" id="5_vs84l"]
 [ext_resource type="AudioStream" uid="uid://gmf73rki8dm1" path="res://data/music/cold wind.ogg" id="5_yyfk4"]
-[ext_resource type="PackedScene" uid="uid://x14rney0gys4" path="res://data/scenes/Night.tscn" id="6_vsamq"]
 [ext_resource type="PackedScene" uid="uid://0tctbehc1p8n" path="res://data/tscn/axe.tscn" id="6_yyfk4"]
 [ext_resource type="Resource" uid="uid://d17p3ul73x1pr" path="res://data/materials/axe_data.tres" id="7_mnhkx"]
 [ext_resource type="Script" uid="uid://c7gydachqxkba" path="res://data/scripts/InventoryHandler.gd" id="8_m0v8d"]
@@ -176,112 +176,6 @@ size = Vector3(0.5, 0.3, 0.7)
 
 [node name="Main" type="Node3D" unique_id=1733271312]
 
-[node name="UIManager" type="CanvasLayer" parent="." unique_id=921903538]
-process_mode = 3
-script = ExtResource("1_ywt6w")
-
-[node name="SettingsMenu" type="Control" parent="UIManager" unique_id=380436463]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UIManager/SettingsMenu" unique_id=196546687]
-layout_mode = 1
-offset_left = 141.0
-offset_top = 28.0
-offset_right = 348.54004
-offset_bottom = 197.91003
-
-[node name="MasterAudioSlider" type="HSlider" parent="UIManager/SettingsMenu/VBoxContainer" unique_id=1307615667]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="UIManager/SettingsMenu/VBoxContainer/MasterAudioSlider" unique_id=399630377]
-layout_mode = 0
-offset_left = -121.0
-offset_top = -4.0
-offset_right = -17.0
-offset_bottom = 19.0
-text = "Master Audio"
-
-[node name="ResolutionButton" type="OptionButton" parent="UIManager/SettingsMenu/VBoxContainer" unique_id=51374095]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="UIManager/SettingsMenu/VBoxContainer/ResolutionButton" unique_id=668252886]
-layout_mode = 0
-offset_left = -111.0
-offset_right = -7.0
-offset_bottom = 23.0
-text = "Resolution"
-
-[node name="FullscreenButton" type="OptionButton" parent="UIManager/SettingsMenu/VBoxContainer" unique_id=1115221348]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="UIManager/SettingsMenu/VBoxContainer/FullscreenButton" unique_id=1433629620]
-layout_mode = 0
-offset_left = -136.0
-offset_top = -3.0
-offset_right = -1.0
-offset_bottom = 20.0
-text = "Fullscreen Modes"
-
-[node name="BackButton" type="Button" parent="UIManager/SettingsMenu" unique_id=751698507]
-layout_mode = 0
-offset_left = 1690.0
-offset_top = 975.0
-offset_right = 1891.0
-offset_bottom = 1052.0
-theme_override_font_sizes/font_size = 50
-text = "Back"
-
-[node name="PauseMenu" type="Control" parent="UIManager" unique_id=1397500617]
-process_mode = 3
-visible = false
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UIManager/PauseMenu" unique_id=1487426501]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -74.0
-offset_top = -48.0
-offset_right = 76.0
-offset_bottom = 72.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="ResumeButton" type="Button" parent="UIManager/PauseMenu/VBoxContainer" unique_id=1654045726]
-layout_mode = 2
-theme_override_font_sizes/font_size = 50
-text = "Resume"
-
-[node name="SettingsButton" type="Button" parent="UIManager/PauseMenu/VBoxContainer" unique_id=2052736748]
-layout_mode = 2
-theme_override_font_sizes/font_size = 50
-text = "Settings"
-
-[node name="QuitButton" type="Button" parent="UIManager/PauseMenu/VBoxContainer" unique_id=395103808]
-layout_mode = 2
-theme_override_font_sizes/font_size = 50
-text = "Quit"
-
-[node name="MapUI" type="Control" parent="UIManager" unique_id=608188554]
-visible = false
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
 [node name="CharacterBody3D" type="CharacterBody3D" parent="." unique_id=1907748824]
 transform = Transform3D(-0.9986301, 0, 0.052336078, 0, 1, 0, -0.052336078, 0, -0.9986301, -0.826, 1.515, -2.476)
 collision_mask = 3
@@ -401,9 +295,160 @@ transform = Transform3D(0.99999964, 0, 3.7252903e-09, 0, 1, 0, -3.7252903e-09, 0
 volume_db = -30.0
 panning_strength = 0.6
 
-[node name="world" type="Node3D" parent="." unique_id=291877849]
+[node name="Inventory" type="Node" parent="CharacterBody3D" unique_id=639180582]
 
-[node name="Skybox and Light" parent="world" unique_id=956150252 instance=ExtResource("6_vsamq")]
+[node name="UIManager" type="CanvasLayer" parent="." unique_id=921903538]
+process_mode = 3
+script = ExtResource("1_ywt6w")
+
+[node name="SettingsMenu" type="Control" parent="UIManager" unique_id=380436463]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UIManager/SettingsMenu" unique_id=196546687]
+layout_mode = 1
+offset_left = 141.0
+offset_top = 28.0
+offset_right = 348.54004
+offset_bottom = 197.91003
+
+[node name="MasterAudioSlider" type="HSlider" parent="UIManager/SettingsMenu/VBoxContainer" unique_id=1307615667]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UIManager/SettingsMenu/VBoxContainer/MasterAudioSlider" unique_id=399630377]
+layout_mode = 0
+offset_left = -121.0
+offset_top = -4.0
+offset_right = -17.0
+offset_bottom = 19.0
+text = "Master Audio"
+
+[node name="ResolutionButton" type="OptionButton" parent="UIManager/SettingsMenu/VBoxContainer" unique_id=51374095]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UIManager/SettingsMenu/VBoxContainer/ResolutionButton" unique_id=668252886]
+layout_mode = 0
+offset_left = -111.0
+offset_right = -7.0
+offset_bottom = 23.0
+text = "Resolution"
+
+[node name="FullscreenButton" type="OptionButton" parent="UIManager/SettingsMenu/VBoxContainer" unique_id=1115221348]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UIManager/SettingsMenu/VBoxContainer/FullscreenButton" unique_id=1433629620]
+layout_mode = 0
+offset_left = -136.0
+offset_top = -3.0
+offset_right = -1.0
+offset_bottom = 20.0
+text = "Fullscreen Modes"
+
+[node name="BackButton" type="Button" parent="UIManager/SettingsMenu" unique_id=751698507]
+layout_mode = 0
+offset_left = 1690.0
+offset_top = 975.0
+offset_right = 1891.0
+offset_bottom = 1052.0
+theme_override_font_sizes/font_size = 50
+text = "Back"
+
+[node name="PauseMenu" type="Control" parent="UIManager" unique_id=1397500617]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UIManager/PauseMenu" unique_id=1487426501]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -74.0
+offset_top = -48.0
+offset_right = 76.0
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ResumeButton" type="Button" parent="UIManager/PauseMenu/VBoxContainer" unique_id=1654045726]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Resume"
+
+[node name="SettingsButton" type="Button" parent="UIManager/PauseMenu/VBoxContainer" unique_id=2052736748]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Settings"
+
+[node name="QuitButton" type="Button" parent="UIManager/PauseMenu/VBoxContainer" unique_id=395103808]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Quit"
+
+[node name="MapUI" type="Control" parent="UIManager" unique_id=608188554]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="InventoryUI" type="Control" parent="UIManager" unique_id=388962494]
+visible = false
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_ek5i0")
+
+[node name="ReferenceRect" type="ReferenceRect" parent="UIManager/InventoryUI" unique_id=1942582258]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+editor_only = false
+
+[node name="Panel" type="Panel" parent="UIManager/InventoryUI/ReferenceRect" unique_id=50817363]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Screen" type="Panel" parent="UIManager/InventoryUI" unique_id=1637486016]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = -1
+offset_right = 100.0
+offset_bottom = 100.0
+
+[node name="GridContainer" type="GridContainer" parent="UIManager/InventoryUI/Screen" unique_id=586921597]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Background" type="Panel" parent="UIManager/InventoryUI" unique_id=1907813231]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="world" type="Node3D" parent="." unique_id=291877849]
 
 [node name="Floor" type="Node3D" parent="world" unique_id=1603705954]
 

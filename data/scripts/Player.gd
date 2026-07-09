@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-var speed
+var speed = 0
 const WALK_SPEED = 5.0
 const SPRINT_SPEED = 8.0
 const JUMP_VELOCITY = 4.8
@@ -22,6 +22,7 @@ var gravity = 9.8
 @onready var camera = $Head/Camera
 @onready var foot_cast = $FootCast
 @onready var foostep = $AudioStreamPlayer3D
+@onready var ui_manager = $"../UIManager"
 
 var footstep_sounds = [
 	preload("res://data/sfx/footstep1.wav"),
@@ -35,28 +36,39 @@ func _ready():
 		
 func _unhandled_input(event):
 	if event is InputEventMouseMotion:
-		head.rotate_y(-event.relative.x * SENSITIVITY)
-		camera.rotate_x(-event.relative.y * SENSITIVITY)
-		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-40), deg_to_rad(60))
+		# If any menu is open, disable camera movement.
+		# (MenuState.NONE == 0) because enums are secretly ints that count up from 0
+		if ui_manager.current_menu_state == 0: 
+			head.rotate_y(-event.relative.x * SENSITIVITY)
+			camera.rotate_x(-event.relative.y * SENSITIVITY)
+			camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-40), deg_to_rad(60))
 
 
 func _physics_process(delta):
+	var direction
+	
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
-	# Handle Jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
 	
-	# Handle Sprint.
-	if Input.is_action_pressed("sprint"):
-		speed = SPRINT_SPEED
+	# If any menu is open, disable player movement.
+	if ui_manager.current_menu_state == 0:
+		# Handle Jump.
+		if Input.is_action_just_pressed("jump") and is_on_floor():
+			velocity.y = JUMP_VELOCITY
+		
+		# Handle Sprint.
+		if Input.is_action_pressed("sprint"):
+			speed = SPRINT_SPEED
+		else:
+			speed = WALK_SPEED
+		
+		# Get the input direction and handle the movement/deceleration.
+		var input_dir = Input.get_vector("left", "right", "up", "down")
+		direction = (head.transform.basis * transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	else:
-		speed = WALK_SPEED
+		direction = (head.transform.basis * transform.basis * Vector3(0,0,0)).normalized()
 	
-	# Get the input direction and handle the movement/deceleration.
-	var input_dir = Input.get_vector("left", "right", "up", "down")
-	var direction = (head.transform.basis * transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if is_on_floor():
 		if direction:
 			velocity.x = direction.x * speed

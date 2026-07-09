@@ -15,6 +15,9 @@ var EquippedSlot : int = -1
 ## All the Spacial Inventories the player has.
 var Inventories : Array[SpacialInventory] = [];
 
+@export var testInv : SpacialInventory;
+
+
 func _ready():
 	for i in ItemSlotsCount:
 		var slot = InventorySlotPrefab.instantiate() as InventorySlot
@@ -23,6 +26,8 @@ func _ready():
 		slot.OnItemDropped.connect(ItemDroppedOnSlot.bind())
 		slot.OnItemEquiped.connect(ItemEquipped.bind())
 		InventorySlots.append(slot)
+	
+	self.testInv = SpacialInventory.new(7, 8);
 
 func PickupItem(item : ItemData):
 	var foundSlot : bool = false

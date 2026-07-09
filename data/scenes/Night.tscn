@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://x14rney0gys4"]
+[gd_scene format=3 uid="uid://x14rney0gys4"]
 
 [ext_resource type="Shader" uid="uid://chclqi2d08o68" path="res://data/shaders/stylized-sky.gdshader" id="1_nswa0"]
 
@@ -13,23 +13,23 @@ curve = SubResource("Curve_n7nvs")
 noise_type = 2
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ly3r1"]
-seamless = true
 noise = SubResource("FastNoiseLite_xjyla")
+seamless = true
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_qbiq0"]
 noise_type = 2
 frequency = 0.0001
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ri4nh"]
-seamless = true
 noise = SubResource("FastNoiseLite_qbiq0")
+seamless = true
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_icx83"]
 noise_type = 2
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_iv3s7"]
-seamless = true
 noise = SubResource("FastNoiseLite_icx83")
+seamless = true
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mymif"]
 shader = ExtResource("1_nswa0")
@@ -76,11 +76,11 @@ volumetric_fog_emission = Color(0.325441, 0.325441, 0.325441, 1)
 adjustment_enabled = true
 adjustment_saturation = 1.5
 
-[node name="Node3D" type="Node3D"]
+[node name="Node3D" type="Node3D" unique_id=1252402165]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=538763694]
 environment = SubResource("Environment_55bde")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1798195532]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
 shadow_enabled = true

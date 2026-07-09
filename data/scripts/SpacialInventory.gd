@@ -18,7 +18,7 @@ class_name SpacialInventory
 ##       0 0 4 0                      [br]
 ## 0 is empty space, 1 points to the first element (index 0) of ItemsList,
 ## 2 the second element (index 1), etc.
-var Board : gridShape;
+@export var Board : gridShape;
 ## List of the actual items in the inventory. This is an internal variable, and
 ## should not be shown via UI. Items are added to the lowest empty (null) slot.
 ## Is the same length as Board.
@@ -27,11 +27,8 @@ var Board : gridShape;
 ## Constructor. Given Width and Height, create and zero out arrays. Width and
 ## Height have a minimum value of 1.
 func _init(Width : int, Height : int):
-	self.Width = Width if Width > 0 else 1;
-	self.Height = Height if Height > 0 else 1;
-	self.Board.resize(self.Width*self.Height);
-	self.Board.fill(0);
-	self.List.resize(self.Width*self.Height);
+	self.Board = gridShape.new(Width, Height)
+	self.List.resize(Width*Height);
 	self.List.fill(null);
 
 # TODO: This should have multiple return values:
