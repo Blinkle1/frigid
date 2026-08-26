@@ -1,44 +1,17 @@
 [gd_scene format=4 uid="uid://bvko7hmxs6o8g"]
 
 [ext_resource type="Texture2D" uid="uid://cypb843s6dvia" path="res://data/textures/snow.jpg" id="1_r11fm"]
+[ext_resource type="PackedScene" uid="uid://cujeh5nkdw176" path="res://data/scenes/Player.tscn" id="1_y6pdl"]
 [ext_resource type="Script" uid="uid://dtxh736jfsy08" path="res://data/scenes/ui_manager.gd" id="1_ywt6w"]
-[ext_resource type="Script" uid="uid://byfog4upapbqi" path="res://data/scripts/Player.gd" id="2_5fi5y"]
-[ext_resource type="Texture2D" uid="uid://cunjeg0whbvwk" path="res://data/textures/inventory.png" id="2_6sb1n"]
 [ext_resource type="Script" uid="uid://cxmobujj1xnn7" path="res://data/scenes/inventory_ui.gd" id="2_ek5i0"]
-[ext_resource type="Shader" uid="uid://d0sp3vkcq15u0" path="res://data/shaders/pixelshader.gdshader" id="3_r11fm"]
-[ext_resource type="PackedScene" uid="uid://dmesno7mh3j0r" path="res://data/models/glbs/main_character.glb" id="3_txlyk"]
-[ext_resource type="Script" uid="uid://dk1wd8e5e7deh" path="res://data/scripts/PlayerInteractionHandler.gd" id="4_5fi5y"]
-[ext_resource type="AudioStream" uid="uid://b46dwx8gv3vyx" path="res://data/music/safe_house_updated.ogg" id="4_vs84l"]
-[ext_resource type="Script" uid="uid://cg7ohjuhim53o" path="res://data/scripts/ItemData.gd" id="5_vs84l"]
-[ext_resource type="AudioStream" uid="uid://gmf73rki8dm1" path="res://data/music/cold wind.ogg" id="5_yyfk4"]
+[ext_resource type="Texture2D" uid="uid://7kqx7wfldiep" path="res://data/textures/point.png" id="3_vs84l"]
 [ext_resource type="PackedScene" uid="uid://0tctbehc1p8n" path="res://data/tscn/axe.tscn" id="6_yyfk4"]
-[ext_resource type="Resource" uid="uid://d17p3ul73x1pr" path="res://data/materials/axe_data.tres" id="7_mnhkx"]
-[ext_resource type="Script" uid="uid://c7gydachqxkba" path="res://data/scripts/InventoryHandler.gd" id="8_m0v8d"]
-[ext_resource type="PackedScene" uid="uid://btk22sa02if1k" path="res://data/tscn/axe_held.tscn" id="9_wlc0e"]
 [ext_resource type="PackedScene" uid="uid://dx4dtl0kxujp4" path="res://data/tscn/tree.tscn" id="10_yyfk4"]
 [ext_resource type="PackedScene" uid="uid://q50ugfuj131j" path="res://data/tscn/ruins.tscn" id="12_vsamq"]
 [ext_resource type="PackedScene" uid="uid://dbdo5o720g37r" path="res://data/tscn/cabin.tscn" id="13_m0v8d"]
 [ext_resource type="PackedScene" uid="uid://68bg8a1cgwsa" path="res://data/models/glbs/cliff.glb" id="18_vqjgk"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_5lfti"]
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5lfti"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_r11fm"]
-shader = ExtResource("3_r11fm")
-shader_parameter/shake = 0.015
-shader_parameter/noiseQuality = 250.0
-shader_parameter/noiseIntensity = 0.001
-shader_parameter/offsetIntensity = 0.0
-shader_parameter/colorOffsetIntensity = 0.2
-shader_parameter/pixelSize = 500.0
-shader_parameter/grainIntensity = 0.04
-shader_parameter/use_overlay = true
-shader_parameter/use_lens_distortion = false
-shader_parameter/overlay_color = Color(1, 1, 1, 10)
-shader_parameter/lens_distortion_strength = 0.05
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_r11fm"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vs84l"]
 emission_shape = 3
 emission_box_extents = Vector3(25, 1, 25)
 direction = Vector3(1, -1, 0)
@@ -47,74 +20,10 @@ direction = Vector3(1, -1, 0)
 shading_mode = 0
 albedo_color = Color(0.621524, 0.621524, 0.621524, 1)
 
-[sub_resource type="SphereMesh" id="SphereMesh_r11fm"]
+[sub_resource type="SphereMesh" id="SphereMesh_yyfk4"]
 material = SubResource("StandardMaterial3D_r11fm")
 radius = 0.04
 height = 0.08
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_r11fm"]
-radius = 2.35825
-
-[sub_resource type="Animation" id="Animation_vqjgk"]
-length = 0.4
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Head/axe_in_hand:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector3(1.001, -0.829, -0.709), Vector3(-0.064, -0.744, -0.709), Vector3(1.001, -0.829, -0.709)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Head/axe_in_hand:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector3(0.04886922, 5.9253926, 0.06283186), Vector3(0.0052359877, 8.7441, -1.0105456), Vector3(0.04886922, 5.9253926, 0.06283186)]
-}
-
-[sub_resource type="Animation" id="Animation_txlyk"]
-resource_name = "swing"
-length = 0.4
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Head/axe_in_hand:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector3(0.04886922, 5.9253926, 0.06283186), Vector3(-0.3874631, 8.290314, -1.2636184), Vector3(0.04886922, 5.9253926, 0.06283186)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Head/axe_in_hand:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector3(1.001, -0.829, -0.709), Vector3(-0.06400001, -0.744, -0.709), Vector3(1.001, -0.829, -0.709)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_vqjgk"]
-_data = {
-&"RESET": SubResource("Animation_vqjgk"),
-&"swing": SubResource("Animation_txlyk")
-}
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wtdyi"]
 albedo_texture = ExtResource("1_r11fm")
@@ -176,130 +85,45 @@ size = Vector3(0.5, 0.3, 0.7)
 
 [node name="Main" type="Node3D" unique_id=1733271312]
 
-[node name="CharacterBody3D" type="CharacterBody3D" parent="." unique_id=1907748824]
-transform = Transform3D(-0.9986301, 0, 0.052336078, 0, 1, 0, -0.052336078, 0, -0.9986301, -0.826, 1.515, -2.476)
-collision_mask = 3
-script = ExtResource("2_5fi5y")
+[node name="Player" parent="." unique_id=122068187 instance=ExtResource("1_y6pdl")]
+transform = Transform3D(-0.99863, 0, 0.052336074, 0, 1, 0, -0.052336074, 0, -0.99863, -0.826, 1.515, -2.476)
 
-[node name="Sketchfab_Scene" parent="CharacterBody3D" unique_id=1989748252 instance=ExtResource("3_txlyk")]
-transform = Transform3D(-0.99965745, 0, -0.026176956, 0, 1, 0, 0.026176956, 0, -0.99965745, 0, -1.0186524, 0)
-visible = false
-
-[node name="Mesh" type="MeshInstance3D" parent="CharacterBody3D" unique_id=1939922702]
-mesh = SubResource("CapsuleMesh_5lfti")
-skeleton = NodePath("")
-
-[node name="Collision" type="CollisionShape3D" parent="CharacterBody3D" unique_id=1817545950]
-shape = SubResource("CapsuleShape3D_5lfti")
-
-[node name="HUD" type="CanvasLayer" parent="CharacterBody3D" unique_id=1351992665]
-visible = false
-
-[node name="TextureRect" type="TextureRect" parent="CharacterBody3D/HUD" unique_id=1178460464]
-offset_left = 809.0
-offset_top = 886.0
-offset_right = 1184.0
-offset_bottom = 1006.0
-texture = ExtResource("2_6sb1n")
-metadata/_edit_lock_ = true
-
-[node name="InventoryGrid" type="GridContainer" parent="CharacterBody3D/HUD" unique_id=1764046008]
-custom_minimum_size = Vector2(64, 64)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 834.0
-offset_top = 911.0
-offset_right = 834.0
-offset_bottom = 911.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/h_separation = 21
-columns = 4
-metadata/_edit_lock_ = true
-
-[node name="Head" type="Node3D" parent="CharacterBody3D" unique_id=1649623261]
-transform = Transform3D(1, 0, 0, 0, 0.98419595, 0.17708498, 0, -0.17708498, 0.98419595, 0, 0.58, 0)
-
-[node name="Camera" type="Camera3D" parent="CharacterBody3D/Head" unique_id=1944224132]
-transform = Transform3D(1, 0, 0, 3.72529e-09, 1, 0, 0, 0, 1, 0, 0, 0)
-fov = 90.0
-
-[node name="filter" type="ColorRect" parent="CharacterBody3D/Head/Camera" unique_id=542315878]
-visible = false
-material = SubResource("ShaderMaterial_r11fm")
-use_parent_material = true
-offset_left = -6273.0
-offset_top = -3430.0
-offset_right = 8254.0
-offset_bottom = 4969.0
-mouse_filter = 2
-metadata/_edit_lock_ = true
-
-[node name="RayCast3D" type="RayCast3D" parent="CharacterBody3D/Head/Camera" unique_id=254985883]
-
-[node name="axe_in_hand" parent="CharacterBody3D/Head" unique_id=269317194 instance=ExtResource("9_wlc0e")]
-transform = Transform3D(0.93374926, -0.07588788, -0.34978923, 0.06271552, 0.9968345, -0.048849735, 0.35238943, 0.023676194, 0.9355532, 1.001, -0.829, -0.709)
-visible = false
-
-[node name="Snow" type="GPUParticles3D" parent="CharacterBody3D" unique_id=640886918]
+[node name="Snow" type="GPUParticles3D" parent="Player" unique_id=1791261624]
 transform = Transform3D(0.957082, 0, -0.289817, 0, 1, 0, 0.289817, 0, 0.957082, -0.424476, 12.8766, -0.313205)
 amount = 2000
 lifetime = 5.0
 fixed_fps = 60
 visibility_aabb = AABB(-100.997, -125.3, -101, 201.982, 127.299, 202)
-process_material = SubResource("ParticleProcessMaterial_r11fm")
-draw_pass_1 = SubResource("SphereMesh_r11fm")
-
-[node name="InteractionArea" type="Area3D" parent="CharacterBody3D" unique_id=296325627]
-collision_layer = 0
-collision_mask = 2
-script = ExtResource("4_5fi5y")
-ItemTypes = Array[ExtResource("5_vs84l")]([ExtResource("7_mnhkx")])
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D/InteractionArea" unique_id=2021626388]
-shape = SubResource("SphereShape3D_r11fm")
-
-[node name="ImportantStuff" type="Node3D" parent="CharacterBody3D" unique_id=1828426986]
-transform = Transform3D(-0.7713352, 0, -0.63642824, 0, 1, 0, 0.63642824, 0, -0.7713352, 0, -0.63692, 0)
-
-[node name="InventoryHandler" type="Node3D" parent="CharacterBody3D/ImportantStuff" unique_id=1352452205 node_paths=PackedStringArray("PlayerBody", "InventoryGrid", "axe_in_hand", "AxeAnimator")]
-script = ExtResource("8_m0v8d")
-PlayerBody = NodePath("../..")
-CollisionMask = 1
-InventoryGrid = NodePath("../../HUD/InventoryGrid")
-axe_in_hand = NodePath("../../Head/axe_in_hand")
-AxeAnimator = NodePath("../../AnimationPlayer")
-
-[node name="Music" type="AudioListener3D" parent="CharacterBody3D/ImportantStuff" unique_id=1222840528]
-
-[node name="SafeHouseUpdated" type="AudioStreamPlayer" parent="CharacterBody3D/ImportantStuff/Music" unique_id=1883631907]
-stream = ExtResource("4_vs84l")
-volume_db = -15.0
-autoplay = true
-parameters/looping = false
-
-[node name="ColdWind" type="AudioStreamPlayer" parent="CharacterBody3D/ImportantStuff/Music" unique_id=284380166]
-stream = ExtResource("5_yyfk4")
-volume_db = -16.0
-autoplay = true
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterBody3D" unique_id=2096964039]
-libraries/ = SubResource("AnimationLibrary_vqjgk")
-
-[node name="FootCast" type="RayCast3D" parent="CharacterBody3D" unique_id=1957122021]
-target_position = Vector3(0, -1.5, 0)
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="CharacterBody3D" unique_id=15676176]
-transform = Transform3D(0.99999964, 0, 3.7252903e-09, 0, 1, 0, -3.7252903e-09, 0, 0.99999964, 0, 0, 0)
-volume_db = -30.0
-panning_strength = 0.6
-
-[node name="Inventory" type="Node" parent="CharacterBody3D" unique_id=639180582]
+process_material = SubResource("ParticleProcessMaterial_vs84l")
+draw_pass_1 = SubResource("SphereMesh_yyfk4")
 
 [node name="UIManager" type="CanvasLayer" parent="." unique_id=921903538]
 process_mode = 3
 script = ExtResource("1_ywt6w")
+
+[node name="DefaultHUD" type="Control" parent="UIManager" unique_id=154853204]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Crosshair" type="TextureRect" parent="UIManager/DefaultHUD" unique_id=1367189128]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1.5
+offset_top = -1.5
+offset_right = 1.5
+offset_bottom = 1.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_vs84l")
 
 [node name="SettingsMenu" type="Control" parent="UIManager" unique_id=380436463]
 layout_mode = 3
@@ -420,7 +244,6 @@ grow_vertical = 2
 script = ExtResource("2_ek5i0")
 
 [node name="ReferenceRect" type="ReferenceRect" parent="UIManager/InventoryUI" unique_id=1942582258]
-visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -1357,7 +1180,7 @@ transform = Transform3D(0.041397236, -7.1083736, -2.628165, 0.018622065, 15.8020
 [node name="lampposts" type="Node3D" parent="world" unique_id=1425540199]
 
 [node name="lamppost" type="Node3D" parent="world/lampposts" unique_id=1494499451]
-transform = Transform3D(0.788118, 0, 0.615524, 0, 1, 0, -0.615524, 0, 0.788118, -2.60777, 0, 0)
+transform = Transform3D(-0.0001291231, 1, -0.000100845784, -0.788118, -0.00016383728, -0.615524, -0.615524, 0, 0.788118, -2.4953015, 8.8353405, 0)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="world/lampposts/lamppost" unique_id=472104721]
 transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 0, 0, 0)
@@ -1427,8 +1250,13 @@ offset = Vector2(0, 15)
 billboard = 1
 text = "Axe [E]"
 
-[connection signal="OnItemPickedUp" from="CharacterBody3D/InteractionArea" to="CharacterBody3D/ImportantStuff/InventoryHandler" method="_on_interaction_area_on_item_picked_up"]
-[connection signal="body_entered" from="CharacterBody3D/InteractionArea" to="CharacterBody3D/InteractionArea" method="OnObjectEnteredArea"]
-[connection signal="body_entered" from="CharacterBody3D/InteractionArea" to="axe" method="_on_interaction_area_body_entered"]
-[connection signal="body_exited" from="CharacterBody3D/InteractionArea" to="CharacterBody3D/InteractionArea" method="OnObjectExitedArea"]
-[connection signal="body_exited" from="CharacterBody3D/InteractionArea" to="axe" method="_on_interaction_area_body_exited"]
+[node name="axe2" parent="." unique_id=1187744711 instance=ExtResource("6_yyfk4")]
+transform = Transform3D(-0.751172, -0.12137076, -0.6488527, -0.2808957, 0.9482879, 0.1478094, 0.5973594, 0.2932902, -0.74641985, -4.136, 0.461, -0.541)
+
+[node name="Label3D2" type="Label3D" parent="axe2" unique_id=917513628]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96871054, 0)
+visible = false
+layers = 3
+offset = Vector2(0, 15)
+billboard = 1
+text = "Axe [E]"

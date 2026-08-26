@@ -4,12 +4,11 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://cayxgrgfumkx5"
-path="res://.godot/imported/cliff.blend-7e2836e6924386f1c7ec04fd22e1e452.scn"
+valid=false
 
 [deps]
 
 source_file="res://data/models/blender files/cliff.blend"
-dest_files=["res://.godot/imported/cliff.blend-7e2836e6924386f1c7ec04fd22e1e452.scn"]
 
 [params]
 

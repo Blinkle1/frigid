@@ -1,8 +1,8 @@
 extends CharacterBody3D
 
 var speed = 0
-const WALK_SPEED = 5.0
-const SPRINT_SPEED = 8.0
+const WALK_SPEED = 3.0
+const SPRINT_SPEED = 5.0
 const JUMP_VELOCITY = 4.8
 const SENSITIVITY = 0.0015
 
@@ -23,6 +23,7 @@ var gravity = 9.8
 @onready var foot_cast = $FootCast
 @onready var foostep = $AudioStreamPlayer3D
 @onready var ui_manager = $"../UIManager"
+@onready var interaction_ray = $Head/InteractionRay
 
 var footstep_sounds = [
 	preload("res://data/sfx/footstep1.wav"),
@@ -32,16 +33,26 @@ var footstep_sounds = [
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-
+	var _comment = "
+	interaction_ray.global_rotation[0] = head.global_rotation[1]
+	interaction_ray.global_rotation[1] = head.global_rotation[2]
+	interaction_ray.global_rotation[2] = head.global_rotation[0]
+	#"
 		
 func _unhandled_input(event):
 	if event is InputEventMouseMotion:
 		# If any menu is open, disable camera movement.
 		# (MenuState.NONE == 0) because enums are secretly ints that count up from 0
 		if ui_manager.current_menu_state == 0: 
-			head.rotate_y(-event.relative.x * SENSITIVITY)
-			camera.rotate_x(-event.relative.y * SENSITIVITY)
-			camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-40), deg_to_rad(60))
+			self.rotate_y(-event.relative.x * SENSITIVITY)
+			head.rotate_x(-event.relative.y * SENSITIVITY)
+			head.rotation.x = clamp(head.rotation.x, deg_to_rad(-90), deg_to_rad(90))
+			var _comment2 = "
+			print('=====')
+			print(camera.global_rotation)
+			print(interaction_ray.global_rotation)
+			print(head.global_rotation)
+			#"
 
 
 func _physics_process(delta):
@@ -65,9 +76,10 @@ func _physics_process(delta):
 		
 		# Get the input direction and handle the movement/deceleration.
 		var input_dir = Input.get_vector("left", "right", "up", "down")
-		direction = (head.transform.basis * transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+		direction = (self.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	else:
-		direction = (head.transform.basis * transform.basis * Vector3(0,0,0)).normalized()
+		#direction = (self.transform.basis * transform.basis * Vector3(0,0,0)).normalized()
+		direction = (self.transform.basis * Vector3(0,0,0)).normalized()
 	
 	if is_on_floor():
 		if direction:
@@ -98,6 +110,9 @@ func _physics_process(delta):
 		if sin(t_bob * BOB_FREQ) > 0.95 and $AudioStreamPlayer3D.playing == false:
 			play_footstep()
 
+# TODO: the player node should only request audio to be played, and those
+# requests should go to an audio manager-esque object.
+
 func play_footstep():
 	var surface = foot_cast.get_collider()
 	# Grab a random sound from the array
@@ -108,7 +123,7 @@ func play_footstep():
 	$AudioStreamPlayer3D.pitch_scale = randf_range(0.9, 1.1)
 	
 	$AudioStreamPlayer3D.play()
-	
+
 func _headbob(time) -> Vector3:
 	var pos = Vector3.ZERO
 	pos.y = sin(time * BOB_FREQ) * BOB_AMP

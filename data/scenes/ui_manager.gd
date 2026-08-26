@@ -12,6 +12,7 @@ extends CanvasLayer
 @onready var res_btn = $SettingsMenu/VBoxContainer/ResolutionButton
 @onready var fullscreen_btn = $SettingsMenu/VBoxContainer/FullscreenButton
 @onready var back_btn = $SettingsMenu/BackButton
+#@onready var hud = $DefaultHUD
 
 enum MenuState { 
 	NONE, 				
@@ -19,8 +20,8 @@ enum MenuState {
 	SETTINGS, 			
 	MAP, 				
 	INVENTORY,
-
 }			
+
 @export var current_menu_state = MenuState.NONE
 var previous_state = MenuState.NONE
 
@@ -43,7 +44,6 @@ func _ready():
 	fullscreen_btn.add_item("Borderless")
 	
 	
-	
 	#change_menu(MenuState.INVENTORY)
 	change_menu(MenuState.NONE)
 
@@ -53,10 +53,12 @@ func change_menu(new_state):
 	current_menu_state = new_state
 	
 	# 2. Toggle visibility based on state
+	# there might be a better way to do this
 	pause_menu.visible = (current_menu_state == MenuState.PAUSE)
 	settings_menu.visible = (current_menu_state == MenuState.SETTINGS)
 	map_ui.visible = (current_menu_state == MenuState.MAP)
 	inventory_menu.visible = (current_menu_state == MenuState.INVENTORY);
+	#hud.visible = (current_menu_state == MenuState.NONE);
 	
 	# 3. Handle Game/Mouse state
 	match current_menu_state:
@@ -68,13 +70,14 @@ func change_menu(new_state):
 			get_tree().paused = false
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			
-		_:		# triggers on everything else (wildcard)
+		_:		# triggers on everything else
 			get_tree().paused = true
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		
 func go_back():
 	change_menu(previous_state)
 
+# Should this be merged into _input?
 func toggle_pause():
 	if current_menu_state == MenuState.PAUSE:
 		change_menu(MenuState.NONE)
@@ -101,6 +104,7 @@ func _input(event):
 		match current_menu_state:
 			MenuState.NONE:
 				change_menu(MenuState.INVENTORY);
+				inventory_menu.open();
 			MenuState.MAP:
 				change_menu(MenuState.INVENTORY);
 			MenuState.INVENTORY:

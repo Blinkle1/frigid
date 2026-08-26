@@ -110,7 +110,7 @@ func GetDropPosition() -> Vector3:
 		# Hit nothing? Spawn in empty air exactly in front of the camera
 		return ray_end
 
-func _on_interaction_area_on_item_picked_up(item: Variant) -> void:
+func _on_interaction_ray_on_item_picked_up(item: Variant) -> void:
 	PickupItem(item)
 
 func addInventory(width : int, height : int):
