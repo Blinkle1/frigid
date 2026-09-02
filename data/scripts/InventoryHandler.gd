@@ -12,6 +12,8 @@ class_name InventoryHandler
 var InventorySlots : Array[InventorySlot] = []
 var EquippedSlot : int = -1
 
+## Stuff that is held in David's hands.
+var Hands : Array[InteractableItem] = []
 ## All the Spacial Inventories the player has.
 var Inventories : Array[SpacialInventory] = [];
 
@@ -19,30 +21,54 @@ var Inventories : Array[SpacialInventory] = [];
 
 
 func _ready():
-	for i in ItemSlotsCount:
-		var slot = InventorySlotPrefab.instantiate() as InventorySlot
-		InventoryGrid.add_child(slot)
-		slot.InventorySlotID = i
-		slot.OnItemDropped.connect(ItemDroppedOnSlot.bind())
-		slot.OnItemEquiped.connect(ItemEquipped.bind())
-		InventorySlots.append(slot)
-	
-	self.testInv = SpacialInventory.new(7, 8);
+	self.testInv = SpacialInventory.new(6, 6);
 
+# If this function is slow, it should swap algorithms depending on the number
+# of empty cells. The higher the number of empty cells the better the below
+# algorithm works. With lower numbers of empty cells, this should instead
+# search for empty cells.
+
+## Place an item into a random spot in the inventory.
 func PickupItem(item : ItemData):
-	var foundSlot : bool = false
-	for slot in InventorySlots:
-		if (!slot.SlotFilled):
-			slot.FillSlot(item, false)
-			foundSlot = true
-			ItemEquipped(slot.InventorySlotID) 
+	
+	
+	var width = range(0, testInv.Width)
+	var height = range(0,testInv.Height)
+	
+	var rotationList = range(0,8)
+	
+	#seed(0)
+	rotationList.shuffle()
+	width.shuffle()
+	height.shuffle()
+	var broke = false
+	var shape
+	#shape = item.rotateGrid(0, 1);
+	#print(shape.Width)
+	#return 0
+
+	for x in width:
+		for y in height:
+			for r in rotationList:
+				shape = item.rotateGrid(r, 1);
+				if testInv.spaceCheck(x, y, shape) == 1:
+					#print(str(x), str(y), str(r))
+					testInv.addItem(x, y, r, item)
+					broke = true
+					break
+				else:
+					pass#print(str(x) + str(y) + str(testInv.spaceCheck(x, y, shape)))
+			if broke:
+				break
+		if broke:
 			break
 	
-	# If inventory is full, drop the item we just tried to pick up
-	if (!foundSlot):
-		var dropped_item = load(item.ItemModelPrefab).instantiate() as Node3D
-		PlayerBody.get_parent().add_child(dropped_item)
-		dropped_item.global_position = GetDropPosition()
+	
+	if broke:
+		#testInv.printGrid()
+		return 1
+	else:
+		return 0
 
 func ItemEquipped(slotID : int):
 	if (EquippedSlot != -1):
@@ -111,7 +137,21 @@ func GetDropPosition() -> Vector3:
 		return ray_end
 
 func _on_interaction_ray_on_item_picked_up(item: Variant) -> void:
-	PickupItem(item)
+	
+	#for x in range(0,8):
+		#var test : gridShape = gridShape.new(2,4)
+		#test.Grid = [0,1,2,3,4,5,6,7]#[1,1,1,1,0,1,0,1]
+		#test.rotateGrid(x,0)
+		#print("\n=" + str(x) + "=")
+		#test.printGrid()
+		#
+	#
+	#return
+	
+	if (PickupItem(item.item_data)):
+		item.queue_free()
+	else:
+		print("penis")
 
 func addInventory(width : int, height : int):
 	Inventories.append(SpacialInventory.new(width, height));

@@ -1260,3 +1260,25 @@ layers = 3
 offset = Vector2(0, 15)
 billboard = 1
 text = "Axe [E]"
+
+[node name="axe3" parent="." unique_id=476093267 instance=ExtResource("6_yyfk4")]
+transform = Transform3D(-0.751172, -0.12137076, -0.6488527, -0.2808957, 0.9482879, 0.1478094, 0.5973594, 0.2932902, -0.74641985, -4.136, 2.4987845, -0.541)
+
+[node name="Label3D2" type="Label3D" parent="axe3" unique_id=272294582]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96871054, 0)
+visible = false
+layers = 3
+offset = Vector2(0, 15)
+billboard = 1
+text = "Axe [E]"
+
+[node name="axe4" parent="." unique_id=1928891383 instance=ExtResource("6_yyfk4")]
+transform = Transform3D(-0.751172, -0.12137076, -0.6488527, -0.2808957, 0.9482879, 0.1478094, 0.5973594, 0.2932902, -0.74641985, -4.136, 2.1071649, 1.2196077)
+
+[node name="Label3D2" type="Label3D" parent="axe4" unique_id=772180546]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96871054, 0)
+visible = false
+layers = 3
+offset = Vector2(0, 15)
+billboard = 1
+text = "Axe [E]"

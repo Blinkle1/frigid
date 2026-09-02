@@ -163,5 +163,3 @@ panning_strength = 0.6
 
 [node name="Inventory" type="Node" parent="." unique_id=1057717264]
 script = ExtResource("9_5lb14")
-
-[connection signal="OnItemPickedUp" from="Head/InteractionRay" to="Inventory" method="_on_interaction_ray_on_item_picked_up"]

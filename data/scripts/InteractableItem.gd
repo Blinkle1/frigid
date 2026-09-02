@@ -6,11 +6,18 @@ class_name InteractableItem
 @export var item_data : ItemData
 @onready var tooltip = $Label3D
 
+var debug = true
+
 func _ready():
+	
+	if debug:
+		item_data = ItemData.new(0)
+	
 	if tooltip:
 		tooltip.visible = false
 	else:
 		push_error("BRO! I cannot find the Label3D node!")
+	
 
 func _on_interaction_area_body_entered(body):
 	#print("Collision detected with: ", body.name, " (Type: ", body.get_class(), ")")

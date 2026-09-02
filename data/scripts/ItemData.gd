@@ -1,5 +1,6 @@
-extends Resource
-## A class for containing the raw data for items.
+# Is there a reason to make this extend from Resource and not gridShape?
+extends gridShape
+## A class for containing the raw data (?) for items.
 ##
 ## Container for all the data needed to represent an item, such as it's Name,
 ## ID, Model.
@@ -20,20 +21,17 @@ enum ITEMTYPE {
 	OTHER,			## Miscellaneous items.
 }
 
+## ID of the item.
+var ID : int;
+
 ## Name of item.
 @export var ItemName : String
-## Texture of item for inventory, might not be needed if we just use
-## a 3D model for inventory.
-@export var Icon : Texture2D
-## The model I presume.
+## The model of the item.
 @export_file("*.tscn") var ItemModelPrefab : String
 
 # TODO: Make these variables changeable from the property editor.
 # Do this via @tool and this link:
 # (https://docs.godotengine.org/en/stable/tutorials/plugins/editor/inspector_plugins.html)
-
-## ID of the item.
-var ID : int;
 
 ## Type of item. (Ex: Syringe, Gun, Melee)
 @export var Type : ITEMTYPE;
@@ -48,7 +46,7 @@ var ID : int;
 ##       0 0 1 0 0                      [br]
 ##       0 0 1 0 0                      [br]
 ##       0 0 1 0 0
-var Shape : gridShape = null;
+# var Shape : gridShape = null;
 ## The weight of an Item, currently only to be used in inventory. We can drop
 ## this if we decide to not go through with weight. We can also change the type
 ## to INT if that would make calculations easier.
@@ -57,8 +55,28 @@ var Shape : gridShape = null;
 ## higher for things like ammo.
 @export var MaxStack : int;
 ## Can this item be put in the pocket slots, is shown in the tooltip.
-## Typically this would be true for small items.
+## Typically this would be true for small items, like a Syringe.
 @export var canBePocket : bool;
+
+func _init(id : int):
+	# TODO: Later on, store this information in a file or something
+	if id == 0:
+		self.ID = id
+		self.Width = 2
+		self.Height = 4
+		self.Grid = [1,1,
+					 1,1,
+					 0,1,
+					 0,1]
+		self.ItemName = "Axe"
+		self.Type = ITEMTYPE.MELEE
+		self.Weight = 6
+		self.MaxStack = 1
+		self.IsKeyItem = false
+		self.canBePocket = false
+	else:
+		printerr("ID does not point to an existing item.")
+
 
 # TODO: This function is not done yet, as it does not adjust the underlying
 # shape properly, all it does is change the Width and Height variables.

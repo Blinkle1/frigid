@@ -14,48 +14,47 @@ signal onNewSelectedItem(prev, new)
 
 #@export var focusedItem : Node
 
-# to keep this applicable to not just items but things like doors and buttons,
-# just gonne keep this as Node until a proper class is created
-var lastInteractable = null;
+## The interactable you were looking at in the previous frame.
+var currentInteractable = null;
 
 func _input(event: InputEvent) -> void:
 	if (event.is_action_pressed("interact")):
 		print("INTERACT PRESSED!");
-		if (lastInteractable == null):
+		if (currentInteractable == null):
 			print("No interactable selected.")
 		else:
-			print("Item: ", lastInteractable)
-			PickupItem(lastInteractable)
+			print("Item: ", currentInteractable)
+			PickupItem(currentInteractable)
 
 
 # Do not remove this function, even if items are the only interactable things.
 func PickupItem(focusedItem):
 	if focusedItem == null:
 		return
-		
-	if focusedItem.item_data != null:
+	if focusedItem is InteractableItem:
 		print("Picked up: ", focusedItem.item_data.ItemName)
-		OnItemPickedUp.emit(focusedItem.item_data)
-		focusedItem.queue_free()
+		OnItemPickedUp.emit(focusedItem)
 	else:
+		print(focusedItem.get_class())
 		printerr("Bro, you forgot to drag Axe_Data.tres into the floor item!")
 
-# tl;dr: If ray is over an item, give it focus, else, lose focus on the item.
+# If ray is over an item, give it focus, else, lose focus on the item.
 func _physics_process(delta) -> void:
 	if not is_colliding():
-		if lastInteractable != null:
-			lastInteractable.LoseFocus()
-			lastInteractable = null;
-	elif is_colliding():
+		if currentInteractable != null:
+			currentInteractable.LoseFocus()
+			currentInteractable = null;
+	else:
 		var k : Node = get_collider()
-		if (lastInteractable != k) and (k is InteractableItem):
-			# i'm checking for pestilence
-			# print("found one")
+		if (currentInteractable != k) and (k is InteractableItem):
+			
+			if (currentInteractable != null):
+				currentInteractable.LoseFocus()
 			k.GainFocus()
-			lastInteractable = k;
-		elif (lastInteractable != null) and (k is not InteractableItem):
-				lastInteractable.LoseFocus()
-				lastInteractable = null
+			currentInteractable = k;
+		elif (currentInteractable != null) and (k is not InteractableItem):
+				currentInteractable.LoseFocus()
+				currentInteractable = null
 	
 	
 	

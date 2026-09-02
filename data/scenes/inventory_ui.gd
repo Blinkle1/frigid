@@ -11,8 +11,8 @@ enum STATE {
 
 # Is there a better way to do this? This is extremely dependent on the
 # position AND name of nodes.
-@onready var INV_PATH = $"../../Player/ImportantStuff/InventoryHandler"
-@onready var grid = $Screen/GridContainer
+@onready var INV_PATH = $"../../Player/Inventory"
+@onready var UIGrid = $Screen/GridContainer
 @onready var panel = $Screen
 @onready var background = $Background
 var INV_STATE : STATE;
@@ -24,12 +24,12 @@ var cellList : Array[Button];
 func _ready():
 	#background.color
 	#self.
-	var board = INV_PATH.testInv.Board;
-	grid.columns = board.Width;
-	grid.add_theme_constant_override("h_separation", borderSize);
-	grid.add_theme_constant_override("v_separation", borderSize);
+	var inventory = INV_PATH.testInv;
+	UIGrid.columns = inventory.Width;
+	UIGrid.add_theme_constant_override("h_separation", borderSize);
+	UIGrid.add_theme_constant_override("v_separation", borderSize);
 	self.size = get_viewport().size
-	#var _psodl="
+	#var _comment="
 	self.anchor_bottom = 0;
 	self.anchor_left = 0;
 	self.anchor_top = 0;
@@ -39,8 +39,8 @@ func _ready():
 	
 	
 	panel.custom_minimum_size = Vector2(
-		(borderSize * board.Width+1) + (cellSize * board.Width),
-		(borderSize * board.Height+1) + (cellSize * board.Height)
+		(borderSize * inventory.Width+1) + (cellSize * inventory.Width),
+		(borderSize * inventory.Height+1) + (cellSize * inventory.Height)
 		);
 	#SCREEN_PATH.position = an
 	
@@ -56,20 +56,41 @@ func _ready():
 	panel.offset_top = -rec.y / 2
 	panel.offset_bottom = rec.y / 2
 	
-#	grid.
+#	TODO: In the inventory UI, give every button a (x,y) value. When pressed,
+#	emit those values to a function somewhere in THIS file. The receiving
+#	function should remove that item from the inventory.
+#	There is a new script "inventoryButton.gd" which has a new class to hold
+#	the (x,y) pair. I am currently having trouble emitting the (x,y) pair
+#	so please fix that.
+
+
 	var _o = 0;
-	for i in range(0, board.Width * board.Height):
-		cellList.append(Button.new());
+	for i in range(0, inventory.Width * inventory.Height):
+		var invButt = InventoryButton.new()
+		#invButt.x = i%inventory.Width
+		#invButt.y = (i - i%inventory.Width) / inventory.Height
+		invButt.pressed.connect(test)
+		
+		cellList.append(invButt);
+		
 		cellList[i].custom_minimum_size = Vector2(cellSize, cellSize);
-		grid.add_child(cellList[i]);
+		UIGrid.add_child(cellList[i]);
 	
 	
 	
 	# return 0 # Replace with function body.
 
-func open():
-	
-	pass
+func test():
+	print("work")
+
+func dropItem(x : int, y : int):
+	print(str(x) + ", " + str(y))
+
+func refreshInventory():
+	for i in range(0,cellList.size()):
+		cellList[i].text = ""
+		if INV_PATH.testInv.Grid[i]:
+			cellList[i].text = str(INV_PATH.testInv.Grid[i])
 		
 		#print(items[i].position)
 		

@@ -110,9 +110,6 @@ func _physics_process(delta):
 		if sin(t_bob * BOB_FREQ) > 0.95 and $AudioStreamPlayer3D.playing == false:
 			play_footstep()
 
-# TODO: the player node should only request audio to be played, and those
-# requests should go to an audio manager-esque object.
-
 func play_footstep():
 	var surface = foot_cast.get_collider()
 	# Grab a random sound from the array
