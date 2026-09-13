@@ -123,6 +123,22 @@ func setAtIndex(x : int, y : int, value):
 	Grid[(y * self.Width) + x] = value;
 
 
+func getGridCoords(i : int):
+	if i >= Grid.size():
+		return -1
+	elif i < 0:
+		return -2
+	
+	var x : int
+	var y : int
+	
+	x = (i % self.Width)
+	y = (i - x) / self.Width
+	
+	
+	return [x, y]
+	
+
 ## For debugging, prints the Grid to the console.
 func printGrid():
 	var row : String = ""

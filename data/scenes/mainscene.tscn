@@ -1180,7 +1180,7 @@ transform = Transform3D(0.041397236, -7.1083736, -2.628165, 0.018622065, 15.8020
 [node name="lampposts" type="Node3D" parent="world" unique_id=1425540199]
 
 [node name="lamppost" type="Node3D" parent="world/lampposts" unique_id=1494499451]
-transform = Transform3D(-0.0001291231, 1, -0.000100845784, -0.788118, -0.00016383728, -0.615524, -0.615524, 0, 0.788118, -2.4953015, 8.8353405, 0)
+transform = Transform3D(0.7871685, -0.04907246, 0.6147824, 0.038674887, 0.9987952, 0.030205276, -0.615524, -1.2158689e-11, 0.788118, -3.1433039, 2.9263449, -0.5258417)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="world/lampposts/lamppost" unique_id=472104721]
 transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 0, 0, 0)
@@ -1239,43 +1239,11 @@ spot_angle_attenuation = 2.19098
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00321198, 4.51595, 1.21079)
 mesh = SubResource("BoxMesh_y6pdl")
 
-[node name="axe" parent="." unique_id=192713040 instance=ExtResource("6_yyfk4")]
-transform = Transform3D(-0.751172, -0.12137076, -0.6488527, -0.2808957, 0.9482879, 0.1478094, 0.5973594, 0.2932902, -0.74641985, -2.1513057, 0.46137458, -0.5405913)
+[node name="axe" parent="." unique_id=192713040 node_paths=PackedStringArray("item_data") instance=ExtResource("6_yyfk4")]
+transform = Transform3D(-4.3711392e-08, -1, 0, 1.0000001, -4.371139e-08, 0, 0, 0, 1.0000002, 0.4362023, 2.3681114, 1.9995952)
+item_data = NodePath("")
 
 [node name="Label3D2" type="Label3D" parent="axe" unique_id=1034117398]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96871054, 0)
-visible = false
-layers = 3
-offset = Vector2(0, 15)
-billboard = 1
-text = "Axe [E]"
-
-[node name="axe2" parent="." unique_id=1187744711 instance=ExtResource("6_yyfk4")]
-transform = Transform3D(-0.751172, -0.12137076, -0.6488527, -0.2808957, 0.9482879, 0.1478094, 0.5973594, 0.2932902, -0.74641985, -4.136, 0.461, -0.541)
-
-[node name="Label3D2" type="Label3D" parent="axe2" unique_id=917513628]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96871054, 0)
-visible = false
-layers = 3
-offset = Vector2(0, 15)
-billboard = 1
-text = "Axe [E]"
-
-[node name="axe3" parent="." unique_id=476093267 instance=ExtResource("6_yyfk4")]
-transform = Transform3D(-0.751172, -0.12137076, -0.6488527, -0.2808957, 0.9482879, 0.1478094, 0.5973594, 0.2932902, -0.74641985, -4.136, 2.4987845, -0.541)
-
-[node name="Label3D2" type="Label3D" parent="axe3" unique_id=272294582]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96871054, 0)
-visible = false
-layers = 3
-offset = Vector2(0, 15)
-billboard = 1
-text = "Axe [E]"
-
-[node name="axe4" parent="." unique_id=1928891383 instance=ExtResource("6_yyfk4")]
-transform = Transform3D(-0.751172, -0.12137076, -0.6488527, -0.2808957, 0.9482879, 0.1478094, 0.5973594, 0.2932902, -0.74641985, -4.136, 2.1071649, 1.2196077)
-
-[node name="Label3D2" type="Label3D" parent="axe4" unique_id=772180546]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96871054, 0)
 visible = false
 layers = 3

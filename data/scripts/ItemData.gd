@@ -29,6 +29,8 @@ var ID : int;
 ## The model of the item.
 @export_file("*.tscn") var ItemModelPrefab : String
 
+@export var Model : Mesh = null
+
 # TODO: Make these variables changeable from the property editor.
 # Do this via @tool and this link:
 # (https://docs.godotengine.org/en/stable/tutorials/plugins/editor/inspector_plugins.html)
@@ -63,9 +65,10 @@ func _init(id : int):
 	if id == 0:
 		self.ID = id
 		self.Width = 2
-		self.Height = 4
+		self.Height = 5
 		self.Grid = [1,1,
 					 1,1,
+					 0,1,
 					 0,1,
 					 0,1]
 		self.ItemName = "Axe"
@@ -76,6 +79,12 @@ func _init(id : int):
 		self.canBePocket = false
 	else:
 		printerr("ID does not point to an existing item.")
+	
+	# Generate model if no model for the item exists.
+	if Model == null:
+		createModel()
+	
+	
 
 
 # TODO: This function is not done yet, as it does not adjust the underlying
@@ -102,12 +111,117 @@ func adjustSize(widthChange : int = 0, heightChange : int = 0):
 		self.Height += heightChange;
 	
 	return rVal;
+	
 
+# TODO: Fix the color not appearing on the mesh.
 
+## Procedurally create model if the item doesn't have one. [Color] is the
+## color of the model, it defaults to an opaque grey color. [br]
+## Creates unneccessary triangles, but because this is a debugging/beta function,
+## it doesn't really matter.
+func createModel(surfaceColor: Color = Color(0.756, 0.0, 0.392, 1.0)):
+	var surface_array = []
+	surface_array.resize(Mesh.ARRAY_MAX)
 
+	# PackedVector**Arrays for mesh construction.
+	var verts = PackedVector3Array()
+	var colors = PackedColorArray()
+	var normals = PackedVector3Array()
+	var indices = PackedInt32Array()
+	
+	var x 
+	var y
+	var i = 0
+	var scale : float = 0.25
+	
+	var vecs = [
+		Vector3.LEFT,
+		Vector3.RIGHT,
+		Vector3.UP,
+		Vector3.DOWN,
+		Vector3.FORWARD,
+		Vector3.BACK,
+	]
+	
+	var position = 0
+	
+	var gridSize = self.Grid.size()
+	
+	# keep this as a while loop
+	while i < gridSize:
+		if(self.Grid[i] == 1):
+			var xy = self.getGridCoords(i)
+			x = xy[0]
+			y = xy[1]
+			
+			var newVerts = [
+				Vector3(0+x, 0+y, 0), Vector3(1+x, 0+y, 0), 
+				Vector3(0+x, 1+y, 0), Vector3(1+x, 1+y, 0), 
+				
+				Vector3(0+x, 0+y, 1), Vector3(1+x, 0+y, 1), 
+				Vector3(0+x, 1+y, 1), Vector3(1+x, 1+y, 1), 
+			]
+			
+			for v in range(0,newVerts.size()):
+				newVerts[v].z -= 0.5
+				newVerts[v].y -= self.Height/2.0
+				newVerts[v].x -= self.Width/2.0
+				newVerts[v] *= scale
+			
+			
+			
+			# Create data for faces.
+			for v in range(0,vecs.size()/2):
+				var o1 = []
+				var o2 = []
+				var r = range(0,8)
+				verts.append_array(newVerts)
+				for k in r:
+					colors.append(surfaceColor)
+					if k & (1<<v) == 0:
+						normals.append(vecs[v*2])
+						o1.append(k+position)
+					else:
+						normals.append(vecs[(v*2)+1])
+						o2.append(k+position)
+						
+				var k
+				if (v & 1):
+					k = [ o1[2], o1[1], o1[0],   o1[2], o1[3], o1[1],
+						  o2[0], o2[1], o2[2],   o2[1], o2[3], o2[2],]
+				else:
+					k = [ o1[0], o1[1], o1[2],   o1[1], o1[3], o1[2],
+						  o2[2], o2[1], o2[0],   o2[2], o2[3], o2[1],]
+				indices.append_array(k)
+				
+				position = verts.size()
+				
+				#print(o1)
+				#print(o2)
+				print(k)
+				#print("===")
+			#print(verts)
+			#print(indices)
+				
+		i += 1
+	
+	#print(verts.size())
+	#print(indices.size())
+	# Assign arrays to surface array.
+	surface_array[Mesh.ARRAY_VERTEX] = verts
+	surface_array[Mesh.ARRAY_COLOR] = colors
+	surface_array[Mesh.ARRAY_NORMAL] = normals
+	surface_array[Mesh.ARRAY_INDEX] = indices
+	
+	
+	
+	var m : ArrayMesh = ArrayMesh.new()
+	m.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, surface_array)
 
-
-
+	# Create mesh surface from mesh array.
+	self.Model = m
+	
+	return 1
 
 
 

@@ -16,7 +16,7 @@ enum STATE {
 @onready var panel = $Screen
 @onready var background = $Background
 var INV_STATE : STATE;
-var borderSize = 10;
+var borderSize = 1;
 var cellSize = 40;
 
 var cellList : Array[Button];
@@ -62,11 +62,20 @@ func _ready():
 #	There is a new script "inventoryButton.gd" which has a new class to hold
 #	the (x,y) pair. I am currently having trouble emitting the (x,y) pair
 #	so please fix that.
-
-
+	
+	
+	
+	# Default ppearance of buttons
+	var DS : StyleBoxFlat = StyleBoxFlat.new()
+	DS.set_corner_radius_all(0)
+	DS.bg_color = Color(0.35, 0.35, 0.35, 1.0)
+	
+	
+	
 	var _o = 0;
 	for i in range(0, inventory.Width * inventory.Height):
 		var invButt = InventoryButton.new()
+		invButt.add_theme_stylebox_override("normal", DS)
 		#invButt.x = i%inventory.Width
 		#invButt.y = (i - i%inventory.Width) / inventory.Height
 		invButt.pressed.connect(test)
