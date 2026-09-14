@@ -6,6 +6,9 @@ class_name InteractableItem
 @export var ItemHighlightMesh2 : MeshInstance3D
 @export var item_data : ItemData = null
 @onready var tooltip = $Label3D
+var mesh : MeshInstance3D
+var collide : CollisionShape3D
+var mater : Material
 
 var debug = true
 
@@ -22,7 +25,9 @@ func _ready():
 	self.add_child(c)
 	c.make_convex_from_siblings()
 	
-	
+	mesh = m
+	collide = c
+	mater = m.mesh.surface_get_material(0)
 	
 	if tooltip:
 		tooltip.visible = false
@@ -42,11 +47,20 @@ func _on_interaction_area_body_exited(body):
 	if body.name == "CharacterBody3D":
 		tooltip.visible = false
 
+# TODO: Make focused item glow, or have some other method of identifying itself
+# as interactable.
+
 func GainFocus():
-	#ItemHighlightMesh.visible = true
+	var m : Material = mater.duplicate()
+	#m.albedo_color = Color.WHITE
+	m.emission = Color.WHITE #* mater.albedo_color
+	m.emission_enabled = true
+	
+	mesh.mesh.surface_set_material(0, m)
 	tooltip.visible = true
 
 func LoseFocus():
+	mesh.mesh.surface_set_material(0, mater)
 	#ItemHighlightMesh.visible = false
 	tooltip.visible = false
 

@@ -119,7 +119,7 @@ func adjustSize(widthChange : int = 0, heightChange : int = 0):
 ## color of the model, it defaults to an opaque grey color. [br]
 ## Creates unneccessary triangles, but because this is a debugging/beta function,
 ## it doesn't really matter.
-func createModel(surfaceColor: Color = Color(0.756, 0.0, 0.392, 1.0)):
+func createModel(surfaceColor: Color = Color(0.814, 0.0, 0.578, 1.0)):
 	var surface_array = []
 	surface_array.resize(Mesh.ARRAY_MAX)
 
@@ -198,7 +198,7 @@ func createModel(surfaceColor: Color = Color(0.756, 0.0, 0.392, 1.0)):
 				
 				#print(o1)
 				#print(o2)
-				print(k)
+				#print(k)
 				#print("===")
 			#print(verts)
 			#print(indices)
@@ -217,7 +217,13 @@ func createModel(surfaceColor: Color = Color(0.756, 0.0, 0.392, 1.0)):
 	
 	var m : ArrayMesh = ArrayMesh.new()
 	m.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, surface_array)
-
+	var mat : StandardMaterial3D = StandardMaterial3D.new()
+	
+	mat.albedo_color = surfaceColor
+	
+	print(mat.albedo_color)
+	m.surface_set_material(0,mat)
+	#m.set_surface_override_material(surfi, mat)
 	# Create mesh surface from mesh array.
 	self.Model = m
 	
