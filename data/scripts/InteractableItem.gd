@@ -1,33 +1,35 @@
+# Set as @tool so procedurally generated models actually appear in
+# the editor.
+# TODO: There's an error here regarding pathing of nodes? Something to do with:
+# 1. the @tool tag and: 2. _process() creating a new ItemData instance. I do not
+# know what this error really means, but I would prefer it be fixed now than
+# leaving it to fester in future builds.
 @tool
 extends RigidBody3D
-class_name InteractableItem
-# todo: remove this todo
-@export var ItemHighlightMesh : MeshInstance3D
-@export var ItemHighlightMesh2 : MeshInstance3D
-@export var item_data : ItemData = null
-@onready var tooltip = $Label3D
-var mesh : MeshInstance3D
-var collide : CollisionShape3D
-var mater : Material
 
+class_name InteractableItem
+
+var item_data : ItemData = null
+@onready var tooltip = $Label3D
+@onready var mesh : MeshInstance3D = $Mesh
+@onready var collide : CollisionShape3D = $Collision
+# May need to change if the item's model has several types of materials. 
+var mater : Material
+var test : int = 0
 var debug = true
+@export var debugID : int = 0;
+
 
 func _ready():
 	
-	
 	if debug:
-		item_data = ItemData.new(0)
-	var m : MeshInstance3D = MeshInstance3D.new()
-	m.mesh = item_data.Model;
-	self.add_child(m)
+		item_data = ItemData.new(debugID)
+	mesh.mesh = item_data.Model;
 	
-	var c : CollisionShape3D = CollisionShape3D.new()
-	self.add_child(c)
-	c.make_convex_from_siblings()
+	collide.make_convex_from_siblings()
 	
-	mesh = m
-	collide = c
-	mater = m.mesh.surface_get_material(0)
+	# May need to change if model has multiple materials associated with it.
+	mater = mesh.mesh.surface_get_material(0)
 	
 	if tooltip:
 		tooltip.visible = false
@@ -47,13 +49,13 @@ func _on_interaction_area_body_exited(body):
 	if body.name == "CharacterBody3D":
 		tooltip.visible = false
 
-# TODO: Make focused item glow, or have some other method of identifying itself
-# as interactable.
+# TODO: Make focused item additionally have an animation when focused, like
+# an enchanted item in minecraft: makes it easier to see what is highlighted.
 
 func GainFocus():
 	var m : Material = mater.duplicate()
 	#m.albedo_color = Color.WHITE
-	m.emission = Color.WHITE #* mater.albedo_color
+	m.emission = Color(0.5,0.5,0.5,1)
 	m.emission_enabled = true
 	
 	mesh.mesh.surface_set_material(0, m)
@@ -64,8 +66,13 @@ func LoseFocus():
 	#ItemHighlightMesh.visible = false
 	tooltip.visible = false
 
-func _process(delta):
+func _process(_delta):
 	# This runs if godot is in editor mode
 	if Engine.is_editor_hint():
+		#
 		if item_data == null:
 			item_data = ItemData.new(0)
+			print("1")
+		else:
+			pass
+			#item_data.get_path()

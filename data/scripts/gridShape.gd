@@ -1,4 +1,3 @@
-extends Node
 ## Grid of integers that represent items (usually).
 ##
 ## gridShape is essentially an array of integers that represent a 2D grid. The
@@ -103,6 +102,34 @@ func rotateGrid(rotation : int, returnCopy : bool = 0):
 			self.Height = self.Width;
 			self.Width = s;
 
+
+## Rotates the given coordinates based on rotation.
+## Doesn't rotate actual grid. If given erroneous coordinates, the output
+## will also be erroneous.
+func rotateCoords(x : int, y : int, rotation : int):
+	var w : int = self.Width
+	var h : int = self.Height
+	var t
+
+	if rotation & 1:
+		t = y;
+		y = x;
+		x = (h - 1) - t;
+		
+		t = w;
+		w = h;
+		h = t;
+	
+	if rotation & 2:
+		x = (w-1) - x;
+		y = (h-1) - y;
+	
+	
+	if rotation & 4:
+		y = (h-1) - y
+	
+	return [x,y];
+
 func getSize() -> int:
 	return self.Width * self.Height;
 
@@ -122,7 +149,7 @@ func setAtIndex(x : int, y : int, value):
 	#print( str((y * self.Width) + x) + ", " + str(Grid.size()))
 	Grid[(y * self.Width) + x] = value;
 
-
+## Given an index, return the corresponding coordinates.
 func getGridCoords(i : int):
 	if i >= Grid.size():
 		return -1

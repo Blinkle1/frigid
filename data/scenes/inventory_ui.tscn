@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://cm0noxuvfvb4n"]
+
+[ext_resource type="Script" uid="uid://cxmobujj1xnn7" path="res://data/scenes/inventory_ui.gd" id="1_vdbpg"]
+[ext_resource type="Script" uid="uid://dw5nkweishwf6" path="res://data/scripts/spaceGridUI.gd" id="2_51kvl"]
+[ext_resource type="Script" uid="uid://bnjq3durqvg4d" path="res://data/scripts/inventoryButton.gd" id="3_1f2tj"]
+
+[node name="InventoryUI" type="Control" unique_id=266945544]
+visible = false
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vdbpg")
+
+[node name="ReferenceRect" type="ReferenceRect" parent="." unique_id=1117567541]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+editor_only = false
+
+[node name="Panel" type="Panel" parent="ReferenceRect" unique_id=1322471502]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Screen" type="Panel" parent="." unique_id=1587016811]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = -1
+offset_right = 100.0
+offset_bottom = 100.0
+script = ExtResource("2_51kvl")
+
+[node name="InventorySlots" type="GridContainer" parent="Screen" unique_id=1228040884]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="InventoryButton" type="Button" parent="Screen/InventorySlots" unique_id=1880515347]
+layout_mode = 2
+script = ExtResource("3_1f2tj")
+metadata/_custom_type_script = "uid://bnjq3durqvg4d"
+
+[node name="Background" type="Panel" parent="." unique_id=1867845534]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0

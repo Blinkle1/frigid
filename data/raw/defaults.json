@@ -1,0 +1,20 @@
+{
+	"inventories" : [
+		{
+			"Width" : 7,
+			"Height" : 5,
+			"WeightLimit" : 90,
+			"EnableItemLimit" : false,
+			"ItemLimit" : 90,
+			"CountOnlyUniqueItems" : false,
+		},
+		{
+			"Width" : 3,
+			"Height" : 7,
+			"WeightLimit" : 90,
+			"EnableItemLimit" : true,
+			"ItemLimit" : 1,
+			"CountOnlyUniqueItems" : true,
+		}
+	]
+}

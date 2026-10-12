@@ -104,7 +104,7 @@ func _input(event):
 		match current_menu_state:
 			MenuState.NONE:
 				change_menu(MenuState.INVENTORY);
-				inventory_menu.refreshInventory();
+				inventory_menu.refreshAll();
 			MenuState.MAP:
 				change_menu(MenuState.INVENTORY);
 			MenuState.INVENTORY:

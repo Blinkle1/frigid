@@ -22,12 +22,12 @@ enum ITEMTYPE {
 }
 
 ## ID of the item.
-var ID : int;
+@export var ID : int;
 
 ## Name of item.
 @export var ItemName : String
 ## The model of the item.
-@export_file("*.tscn") var ItemModelPrefab : String
+#@export_file("*.tscn") var ItemModelPrefab : String
 
 @export var Model : Mesh = null
 
@@ -58,27 +58,27 @@ var ID : int;
 @export var MaxStack : int;
 ## Can this item be put in the pocket slots, is shown in the tooltip.
 ## Typically this would be true for small items, like a Syringe.
-@export var canBePocket : bool;
+@export var CanBePocket : bool;
 
-func _init(id : int):
+func _init(id : int = -1):
 	# TODO: Later on, store this information in a file or something
-	if id == 0:
-		self.ID = id
-		self.Width = 2
-		self.Height = 5
-		self.Grid = [1,1,
-					 1,1,
-					 0,1,
-					 0,1,
-					 0,1]
-		self.ItemName = "Axe"
-		self.Type = ITEMTYPE.MELEE
-		self.Weight = 6
-		self.MaxStack = 1
-		self.IsKeyItem = false
-		self.canBePocket = false
+	
+	
+	if !(id <= -1 or id >= Global.ITEMS.data.items.size()):
+		var k = Global.ITEMS.data.items[id]
+		self.ID = k.ID;
+		self.Height = k.Height;
+		self.Width = k.Width;
+		self.Grid.assign(k.Grid);
+		self.ItemName = k.Name;
+		self.IsKeyItem = k.IsKeyItem;
+		self.Type = k.Type;
+		self.MaxStack = k.MaxStack;
+		self.CanBePocket = k.CanBePocket
+		self.Weight = k.Weight;
 	else:
-		printerr("ID does not point to an existing item.")
+		printerr("Attempted to create item without valid ID. ("  + str(id) + ")" +
+		" total index: (" + str(Global.ITEMS.data.items.size()) + ")")
 	
 	# Generate model if no model for the item exists.
 	if Model == null:
@@ -119,7 +119,7 @@ func adjustSize(widthChange : int = 0, heightChange : int = 0):
 ## color of the model, it defaults to an opaque grey color. [br]
 ## Creates unneccessary triangles, but because this is a debugging/beta function,
 ## it doesn't really matter.
-func createModel(surfaceColor: Color = Color(0.814, 0.0, 0.578, 1.0)):
+func createModel(surfaceColor: Color = Color(0.348, 0.454, 0.728, 1.0)):
 	var surface_array = []
 	surface_array.resize(Mesh.ARRAY_MAX)
 
@@ -151,8 +151,8 @@ func createModel(surfaceColor: Color = Color(0.814, 0.0, 0.578, 1.0)):
 	while i < gridSize:
 		if(self.Grid[i] == 1):
 			var xy = self.getGridCoords(i)
-			x = xy[0]
-			y = xy[1]
+			x = self.Width - xy[0]
+			y = self.Height - xy[1]
 			
 			var newVerts = [
 				Vector3(0+x, 0+y, 0), Vector3(1+x, 0+y, 0), 
@@ -162,10 +162,12 @@ func createModel(surfaceColor: Color = Color(0.814, 0.0, 0.578, 1.0)):
 				Vector3(0+x, 1+y, 1), Vector3(1+x, 1+y, 1), 
 			]
 			
+			# Flip model 180 around y axis, scale it down,
+			# and make the center of gravity the center of the model.
 			for v in range(0,newVerts.size()):
 				newVerts[v].z -= 0.5
-				newVerts[v].y -= self.Height/2.0
-				newVerts[v].x -= self.Width/2.0
+				newVerts[v].y -= 1 + (self.Height/2.0)
+				newVerts[v].x -= 1 + (self.Width/2.0)
 				newVerts[v] *= scale
 			
 			
@@ -221,7 +223,6 @@ func createModel(surfaceColor: Color = Color(0.814, 0.0, 0.578, 1.0)):
 	
 	mat.albedo_color = surfaceColor
 	
-	print(mat.albedo_color)
 	m.surface_set_material(0,mat)
 	#m.set_surface_override_material(surfi, mat)
 	# Create mesh surface from mesh array.

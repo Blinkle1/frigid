@@ -5,6 +5,8 @@
 [ext_resource type="Script" uid="uid://dtxh736jfsy08" path="res://data/scenes/ui_manager.gd" id="1_ywt6w"]
 [ext_resource type="Script" uid="uid://cxmobujj1xnn7" path="res://data/scenes/inventory_ui.gd" id="2_ek5i0"]
 [ext_resource type="Texture2D" uid="uid://7kqx7wfldiep" path="res://data/textures/point.png" id="3_vs84l"]
+[ext_resource type="Script" uid="uid://dw5nkweishwf6" path="res://data/scripts/spaceGridUI.gd" id="5_yyfk4"]
+[ext_resource type="Script" uid="uid://bnjq3durqvg4d" path="res://data/scripts/inventoryButton.gd" id="6_vsamq"]
 [ext_resource type="PackedScene" uid="uid://0tctbehc1p8n" path="res://data/tscn/axe.tscn" id="6_yyfk4"]
 [ext_resource type="PackedScene" uid="uid://dx4dtl0kxujp4" path="res://data/tscn/tree.tscn" id="10_yyfk4"]
 [ext_resource type="PackedScene" uid="uid://q50ugfuj131j" path="res://data/tscn/ruins.tscn" id="12_vsamq"]
@@ -102,6 +104,7 @@ process_mode = 3
 script = ExtResource("1_ywt6w")
 
 [node name="DefaultHUD" type="Control" parent="UIManager" unique_id=154853204]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -126,6 +129,7 @@ grow_vertical = 2
 texture = ExtResource("3_vs84l")
 
 [node name="SettingsMenu" type="Control" parent="UIManager" unique_id=380436463]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -228,7 +232,6 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="InventoryUI" type="Control" parent="UIManager" unique_id=388962494]
-visible = false
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -244,6 +247,7 @@ grow_vertical = 2
 script = ExtResource("2_ek5i0")
 
 [node name="ReferenceRect" type="ReferenceRect" parent="UIManager/InventoryUI" unique_id=1942582258]
+visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -260,11 +264,17 @@ layout_mode = 1
 anchors_preset = -1
 offset_right = 100.0
 offset_bottom = 100.0
+script = ExtResource("5_yyfk4")
 
-[node name="GridContainer" type="GridContainer" parent="UIManager/InventoryUI/Screen" unique_id=586921597]
+[node name="InventorySlots" type="GridContainer" parent="UIManager/InventoryUI/Screen" unique_id=586921597]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="InventoryButton" type="Button" parent="UIManager/InventoryUI/Screen/InventorySlots" unique_id=188508127]
+layout_mode = 2
+script = ExtResource("6_vsamq")
+metadata/_custom_type_script = "uid://bnjq3durqvg4d"
 
 [node name="Background" type="Panel" parent="UIManager/InventoryUI" unique_id=1907813231]
 layout_mode = 0
@@ -1239,14 +1249,9 @@ spot_angle_attenuation = 2.19098
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00321198, 4.51595, 1.21079)
 mesh = SubResource("BoxMesh_y6pdl")
 
-[node name="axe" parent="." unique_id=192713040 node_paths=PackedStringArray("item_data") instance=ExtResource("6_yyfk4")]
-transform = Transform3D(-4.3711392e-08, -1, 0, 1.0000001, -4.371139e-08, 0, 0, 0, 1.0000002, 0.4362023, 2.3681114, 1.9995952)
-item_data = NodePath("")
+[node name="cheese" parent="." unique_id=192713040 instance=ExtResource("6_yyfk4")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.88944614, 1.2844558, -0.27798986)
 
-[node name="Label3D2" type="Label3D" parent="axe" unique_id=1034117398]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96871054, 0)
-visible = false
-layers = 3
-offset = Vector2(0, 15)
-billboard = 1
-text = "Axe [E]"
+[node name="cheese2" parent="." unique_id=268239369 instance=ExtResource("6_yyfk4")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.88944614, 1.2844558, -0.27798986)
+debugID = 1

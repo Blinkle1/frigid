@@ -1,0 +1,39 @@
+{
+	"items" : [
+		{
+			"ID" : 0,
+			"Name" : "Axe",
+			"Width" : 2,
+			"Height" : 5,
+			"Grid" : [
+				1,1,
+				1,1,
+				0,1,
+				0,1,
+				0,1,
+			],
+			"Type" : 3,
+			"Weight" : 6,
+			"MaxStack" : 1,
+			"IsKeyItem" : false,
+			"CanBePocket" : false,
+		},
+		{
+			"ID" : 1,
+			"Name" : "Wedge",
+			"Width" : 2,
+			"Height" : 3,
+			"Grid" : [
+				1,0,
+				1,0,
+				1,1,
+			],
+			"Type" : 3,
+			"Weight" : 1,
+			"MaxStack" : 1,
+			"IsKeyItem" : false,
+			"CanBePocket" : false,
+		},
+		
+	]
+}

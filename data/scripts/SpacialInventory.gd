@@ -7,21 +7,32 @@ extends gridShape
 ## whatever else you think might need it.
 class_name SpacialInventory
 
+
 ## List of the actual items in the inventory. This is an internal variable, and
 ## should not be shown via UI. Items are added to the lowest empty (null) slot.
 ## Is the same length as Board.
-@export var List : Array[ItemData] = [];
+var List : Array[ItemData] = [];
+
+## Limit of weight before items are rejected (?)
+var WeightLimit : int;
+## Enables or disables item limit
+var EnableItemLimit : bool = false;
+## Limit before more items are rejected. Holsters set this value to 1.
+var ItemLimit : int;
+## If true, essentially makes itemLimit only count unique stacks
+var CountOnlyUniqueItems : bool = false;
+
+#@export var List2 : Array[ItemData] = [];
 
 ## Contains the top-left corner of items, stored in .x and .y, and their
 ## rotation, stored in .z. Rotation should be from 0-7. (See gridShape.rotateGrid()
 ## for details on how rotation should be read.)
-var RotPosList : Array[Vector3] = []
+var RotPosList : Array[Vector3i] = []
 
 ## Constructor. Given Width and Height, create and zero out arrays. Width and
 ## Height have a minimum value of 1.
 func _init(Width : int, Height : int):
 	if Height < 1:
-		print("TESTTESTTEST: " + str(self.Height))
 		self.Height = 1;
 	else:
 		self.Height = Height;
@@ -36,7 +47,10 @@ func _init(Width : int, Height : int):
 	self.List.resize(Width*Height);
 	self.List.fill(null);
 	self.RotPosList.resize(Width*Height);
-	self.RotPosList.fill(Vector3(0,0,0))
+	self.RotPosList.fill(Vector3i(0,0,0))
+	
+	#self.List2.resize(Width*Height);
+	#self.List2.fill(null);
 
 # TODO: This could have multiple return values:
 # if the item can't fit, return a shape that shows where
@@ -72,19 +86,24 @@ func spaceCheck(x : int, y : int, shape : gridShape, _mode : int = 0):
 func addItem(x : int, y : int, rotation : int, item:ItemData):
 	var index : int = -1;
 	var shape = item.rotateGrid(rotation, 1);		# rotated item shape
-	
+	var k
 	# Store item in List at lowest empty spot.
 	for i in range(0, List.size()):
-		if List[i] == null:
-			List[i] = item
-			index = i+1
-			
-			RotPosList[i].x = x;
-			RotPosList[i].y = y;
-			RotPosList[i].z = rotation;
+		if self.List[i] == null:
+			self.List[i] = item
+			#self.List2[i] = item
+			index = i+1			# The value 0 in a grid indicates emptiness, so this cannot be 0
+			k = i
+			self.RotPosList[i].x = x;
+			self.RotPosList[i].y = y;
+			self.RotPosList[i].z = rotation;
 			
 			break;
-			
+		else:
+			print(self.List[i])
+
+	#print(self.List[k])
+	#print(k)
 	if index == -1:
 		print("Inventory full! Did you not call spaceCheck()?")
 		return -1
@@ -121,6 +140,7 @@ func removeItemByList(index : int):
 	return 1
 
 ## Removes an item from gridShape and List, given coordinates in gridShape.
+## Does NOT remove data from RotPosList, it is not necessary (yet).
 func removeItemByCoords(x : int, y : int) -> int:
 	var index = self.indexGrid(x, y);
 	if index < 0:
@@ -130,19 +150,37 @@ func removeItemByCoords(x : int, y : int) -> int:
 		print("removeItemByCoords: Attempted to remove non-existant item.")
 		return -2
 	
+	# This will get the actual index into List[].
+	index -= 1
 	
-	var item = List[index];
-	var shape = item.rotateGrid[RotPosList[index]]
+	var item : ItemData = self.List[index];
+	var shape : gridShape = item.rotateGrid(self.RotPosList[index].z, 1)
 	
+	var nx = self.RotPosList[index].x
+	var ny = self.RotPosList[index].y
 	# Remove item from List
 	List[index] = null
 	
 	# Remove item from grid
 	for xindex in range(0, shape.Width):
 		for yindex in range(0, shape.Height):
-			if (item.indexGrid(xindex, yindex) == 1):
-				self.setAtIndex(xindex + x, yindex + y, 0);
+			if (shape.indexGrid(xindex, yindex) == 1):
+				self.setAtIndex(xindex + nx, yindex + ny, 0);
 	return 1
+
+
+## Get what item is at a certain index. If rotpos is true, gets the item's
+## Rotation and Position instead.
+func getItemByCoords(x : int, y : int, rotpos : bool = false): 
+	var i = self.indexGrid(x, y)
+	
+	if i < 1:
+		return null
+	
+	if rotpos:
+		return RotPosList[i-1];
+	else:
+		return List[i-1]
 
 # TODO: Complete function. This mirrors the adjustShape function
 # in ItemData. Could be used for inventory space upgrades. Should be used

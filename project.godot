@@ -27,6 +27,10 @@ boot_splash/image="uid://dj5q573bqawnu"
 config/icon="uid://wjrv730bd6c8"
 config/windows_native_icon="res://data/textures/icon.ico"
 
+[autoload]
+
+Global="*uid://cbqhv8okaxgvw"
+
 [display]
 
 window/size/viewport_width=1920
